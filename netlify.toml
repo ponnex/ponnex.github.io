@@ -2,6 +2,12 @@
   command = "npm run generate"
   publish = ".output/public"
 
+[build.environment]
+  NODE_VERSION = "22"
+  # Force Nitro's static preset; otherwise Netlify auto-detection switches to
+  # the `netlify` preset and writes output outside .output/public.
+  NITRO_PRESET = "static"
+
 # SPA fallback: ssr is disabled, so every route must serve index.html
 # and let the client router resolve it.
 [[redirects]]
