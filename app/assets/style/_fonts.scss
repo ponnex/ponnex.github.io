@@ -1,0 +1,76 @@
+// Only modern formats are shipped: woff2 (all current browsers) with a woff
+// fallback. Legacy eot/otf/ttf/svg sources were dropped during the Nuxt 4
+// migration.
+
+/* Display + mono for the terminal/engineer design (self-hosted, variable). */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('../fonts/SpaceGrotesk.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../fonts/JetBrainsMono.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CarmenSans-Regular';
+  src: url('../fonts/CarmenSansRegular.woff2') format('woff2'),
+    url('../fonts/CarmenSansRegular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CarmenSans-Medium';
+  src: url('../fonts/CarmenSansMedium.woff2') format('woff2'),
+    url('../fonts/CarmenSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CarmenSans-SemiBold';
+  src: url('../fonts/CarmenSansSemiBold.woff2') format('woff2'),
+    url('../fonts/CarmenSansSemiBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CarmenSans-Bold';
+  src: url('../fonts/CarmenSansBold.woff2') format('woff2'),
+    url('../fonts/CarmenSansBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CarmenSans-ExtraBold';
+  src: url('../fonts/CarmenSansExtraBold.woff2') format('woff2'),
+    url('../fonts/CarmenSansExtraBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CarmenSans-Heavy';
+  src: url('../fonts/CarmenSansHeavy.woff2') format('woff2'),
+    url('../fonts/CarmenSansHeavy.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Menlo-Regular';
+  src: url('../fonts/Menlo-Regular.woff2') format('woff2'),
+    url('../fonts/Menlo-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Menlo-Bold';
+  src: url('../fonts/Menlo-Bold.woff2') format('woff2'),
+    url('../fonts/Menlo-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

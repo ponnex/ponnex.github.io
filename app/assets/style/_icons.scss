@@ -1,0 +1,57 @@
+.ico-hero {
+  height: $icon-hero;
+  width: $icon-hero;
+  background: url('../images/svg/avatar.svg') no-repeat center center
+    transparent;
+}
+
+.ico-linkedin {
+  height: $icon-social-media;
+  width: $icon-social-media;
+  background: url('../images/svg/linkedIn.svg') no-repeat center center
+    transparent;
+}
+
+.ico-instagram {
+  height: $icon-social-media;
+  width: $icon-social-media;
+  background: url('../images/svg/instagram.svg') no-repeat center center
+    transparent;
+}
+
+.ico-github {
+  height: $icon-social-media;
+  width: $icon-social-media;
+  background: url('../images/svg/github.svg') no-repeat center center
+    transparent;
+}
+
+.ico-attachment {
+  height: $icon-attachment-height;
+  width: $icon-attachment-width;
+  background: url('../images/svg/clip.svg') no-repeat center center
+    transparent;
+}
+
+.ico-arrow {
+  height: $icon-arrow-height;
+  width: $icon-arrow-width;
+  background: url('../images/svg/arrow.svg') no-repeat center center
+    transparent;
+}
+
+.ico-email {
+  height: $icon-email-height;
+  width: $icon-email-width;
+  background: url('../images/svg/email.svg') no-repeat center center
+    transparent;
+}
+
+.icon {
+  display: inline-block;
+  background-size: contain;
+}
+
+.icon-btn {
+  background-color: transparent;
+}

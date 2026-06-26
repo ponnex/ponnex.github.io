@@ -1,0 +1,713 @@
+// =============================================================
+//  Terminal / Engineer design system
+//  Single source of truth for the redesign. Both themes are driven
+//  by CSS custom properties scoped to .theme--default / .theme--light
+//  so nav, footer and every section flip together from one switch.
+// =============================================================
+
+$mono: 'JetBrains Mono', 'Menlo-Regular', ui-monospace, monospace;
+$grot: 'Space Grotesk', 'CarmenSans-Bold', sans-serif;
+$maxw: 1160px;
+
+// ---- theme tokens -------------------------------------------------
+.theme--default {
+  --bg: #141417;
+  --panel: #1b1b1f;
+  --panel-2: #202025;
+  --ink: #e8e8ea;
+  --ink-2: #8b8b93;
+  --line: rgba(255, 255, 255, 0.08);
+  --grid: rgba(255, 255, 255, 0.045);
+  --accent: #fdc435;
+  --accent-text: #fdc435; // accent used as text — readable on dark
+  --accent-ink: #141417; // text placed on top of accent fills
+  --green: #7ee08a;
+  --bar-track: #2c2c33;
+  --cta-bg: rgba(253, 196, 53, 0.05);
+}
+
+.theme--light {
+  --bg: #f4f2ec;
+  --panel: #ffffff;
+  --panel-2: #f8f6f0;
+  --ink: #1a1a1d;
+  --ink-2: #6b6b73;
+  --line: rgba(20, 20, 23, 0.12);
+  --grid: rgba(20, 20, 23, 0.045);
+  --accent: #fdc435;
+  --accent-text: #9a7400; // darkened so it stays legible on paper
+  --accent-ink: #1a1a1d;
+  --green: #2e8b40;
+  --bar-track: #e6e2d8;
+  --cta-bg: rgba(253, 196, 53, 0.1);
+}
+
+// ---- page shell (override legacy .base chrome) --------------------
+html,
+body {
+  background: #141417; // matches dark default; prevents flash before paint
+}
+
+.theme {
+  height: auto; // override legacy `.theme { height: 100vh }` so it wraps all content
+  min-height: 100vh;
+  font-family: $mono;
+  background-color: var(--bg);
+  color: var(--ink);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.base {
+  background: transparent !important;
+  &:after {
+    display: none !important;
+  }
+}
+.base__page {
+  margin-bottom: 0;
+}
+.body {
+  display: block;
+  overflow: visible;
+  margin-top: 0;
+}
+
+.shell {
+  max-width: $maxw;
+  margin: 0 auto;
+  padding: 0 48px;
+  @media (max-width: $screen-sm-max) {
+    padding: 0 22px;
+  }
+}
+
+// shared helpers
+.t-mono {
+  font-family: $mono;
+}
+.c-accent {
+  color: var(--accent-text);
+}
+.c-green {
+  color: var(--green);
+}
+.c-dim {
+  color: var(--ink-2);
+}
+
+// section header:  // selected_work  ────────  04 projects
+.sec {
+  // vertical only — horizontal padding comes from .shell. Using the `padding`
+  // shorthand here would reset .shell's side padding to 0 and let content run
+  // edge-to-edge below the max-width breakpoint (mobile/tablet).
+  padding-block: 72px;
+  @media (max-width: $screen-sm-max) {
+    padding-block: 48px;
+  }
+}
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  font-family: $mono;
+  font-size: 13px;
+  color: var(--ink-2);
+  .h {
+    color: var(--accent-text);
+  }
+  .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+}
+
+// ---- nav ---------------------------------------------------------
+.tnav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(10px);
+  &__in {
+    max-width: $maxw;
+    margin: 0 auto;
+    padding: 0 48px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: $mono;
+    font-size: 13px;
+    @media (max-width: $screen-sm-max) {
+      padding: 0 16px;
+      font-size: 12px;
+    }
+  }
+  &__logo {
+    font-family: $mono;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    .c-accent {
+      margin-right: 1px;
+    }
+  }
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    list-style: none;
+    white-space: nowrap; // keep the active "> resume" prefix on one line
+    li > a {
+      color: var(--ink-2);
+      text-decoration: none;
+      cursor: pointer;
+      &:hover {
+        color: var(--accent-text);
+      }
+    }
+    li.active > a {
+      color: var(--ink);
+    }
+    li.active > a:before {
+      content: '> ';
+      color: var(--accent-text);
+    }
+    @media (max-width: $screen-sm-max) {
+      gap: 12px;
+      // The logo already links home, so the redundant "portfolio" link is
+      // hidden on phones — without this the row overflows ~360px-wide screens.
+      li:first-child {
+        display: none;
+      }
+    }
+  }
+  &__status {
+    display: flex;
+    align-items: center;
+    color: var(--ink-2);
+    @media (max-width: $screen-md-max) {
+      display: none;
+    }
+  }
+  &__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    display: inline-block;
+    margin-right: 7px;
+    box-shadow: 0 0 8px var(--green);
+  }
+  .theme-toggle {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font-family: $mono;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--ink-2);
+    &__bracket {
+      color: var(--ink-2);
+    }
+    &__label {
+      margin: 0 1px;
+    }
+    &:hover .theme-toggle__label {
+      color: var(--accent-text);
+    }
+  }
+}
+
+// ---- hero --------------------------------------------------------
+.hero {
+  // vertical only — horizontal padding comes from .shell (see .sec note).
+  padding-block: 76px 64px;
+  @media (max-width: $screen-sm-max) {
+    padding-block: 44px 36px;
+  }
+  &__tag {
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+  &__name {
+    font-family: $grot;
+    font-weight: 700;
+    font-size: 80px;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin: 16px 0 0;
+    .y {
+      color: var(--accent-text);
+    }
+    @media (max-width: $screen-md-max) {
+      font-size: 56px;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 40px;
+    }
+  }
+  &__flex {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 50px;
+    align-items: start;
+    margin-top: 34px;
+    @media (max-width: $screen-md-max) {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+  &__blurb {
+    font-family: $grot;
+    font-size: 19px;
+    color: var(--ink-2);
+    max-width: 46ch;
+    line-height: 1.55;
+    b {
+      color: var(--ink);
+      font-weight: 600;
+    }
+  }
+  &__actions {
+    margin-top: 26px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  &__social {
+    margin-top: 30px;
+    .social-icons {
+      justify-content: flex-start;
+      gap: 22px;
+      @include themed() {
+        filter: t($social-icons-color);
+      }
+    }
+  }
+}
+
+// buttons
+.btn {
+  font-family: $mono;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  padding: 12px 22px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s, background 0.2s, border-color 0.2s;
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &--primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 700;
+  }
+  &--ghost {
+    border: 1px solid var(--line);
+    color: var(--ink);
+    &:hover {
+      border-color: var(--accent-text);
+    }
+  }
+}
+
+// code window (stays a dark terminal in both themes — embedded device)
+.code {
+  background: #1b1b1f;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: $mono;
+  font-size: 13px;
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.6);
+  &__bar {
+    display: flex;
+    gap: 7px;
+    padding: 13px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    align-items: center;
+    i {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .fn {
+      margin-left: 10px;
+      color: #8b8b93;
+      font-size: 12px;
+    }
+  }
+  pre {
+    margin: 0;
+    padding: 18px 20px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    color: #e8e8ea;
+    .k {
+      color: #8b8b93;
+    }
+    .a {
+      color: #fdc435;
+    }
+    .s {
+      color: #7ee08a;
+    }
+  }
+}
+
+// ---- work --------------------------------------------------------
+.work {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  @media (max-width: $screen-sm-max) {
+    grid-template-columns: 1fr;
+  }
+}
+.pcard {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: border-color 0.25s, transform 0.25s;
+  &:hover {
+    border-color: var(--accent-text);
+    transform: translateY(-3px);
+  }
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-2);
+    font-size: 12px;
+    .cat {
+      color: var(--accent-text);
+    }
+  }
+  &__body {
+    padding: 20px 18px;
+    h3 {
+      font-family: $grot;
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 8px;
+      letter-spacing: -0.01em;
+    }
+    p {
+      color: var(--ink-2);
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 0;
+    }
+  }
+  &__stack {
+    margin-top: 14px;
+    color: var(--green);
+    font-size: 12px;
+    span {
+      color: var(--ink-2);
+    }
+  }
+}
+.work-more {
+  margin-top: 28px;
+  text-align: center;
+  a {
+    font-family: $mono;
+    font-size: 13px;
+    color: var(--accent-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 3px;
+    &:hover {
+      border-color: var(--accent-text);
+    }
+  }
+}
+
+// ---- skills ------------------------------------------------------
+.skilltbl {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--panel);
+  &__r {
+    display: grid;
+    grid-template-columns: 220px 1fr 90px;
+    gap: 20px;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:nth-child(even) {
+      background: var(--panel-2);
+    }
+    @media (max-width: $screen-sm-max) {
+      grid-template-columns: 130px 1fr 60px;
+      gap: 12px;
+      padding: 14px 16px;
+      font-size: 12px;
+    }
+  }
+  &__name {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  &__bar {
+    height: 6px;
+    background: var(--bar-track);
+    border-radius: 3px;
+    overflow: hidden;
+    i {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+  }
+  &__lvl {
+    color: var(--ink-2);
+    font-size: 12px;
+    text-align: right;
+  }
+}
+
+// ---- about + services -------------------------------------------
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  @media (max-width: $screen-md-max) {
+    grid-template-columns: 1fr;
+  }
+  &__blk {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 26px;
+    h4 {
+      color: var(--accent-text);
+      font-size: 13px;
+      margin: 0 0 14px;
+      font-family: $mono;
+      font-weight: 500;
+    }
+    p {
+      color: var(--ink-2);
+      font-family: $grot;
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0;
+      b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+    }
+  }
+}
+.services {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  @media (max-width: $screen-sm-max) {
+    grid-template-columns: 1fr;
+  }
+  &__item {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 22px;
+    .n {
+      font-family: $mono;
+      font-size: 12px;
+      color: var(--accent-text);
+    }
+    h4 {
+      font-family: $grot;
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 10px 0 8px;
+    }
+    p {
+      color: var(--ink-2);
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 0;
+    }
+  }
+}
+
+// ---- contact / cta ----------------------------------------------
+.cta {
+  border: 1px dashed color-mix(in srgb, var(--accent-text) 45%, transparent);
+  border-radius: 8px;
+  padding: 50px;
+  text-align: center;
+  background: var(--cta-bg);
+  margin-bottom: 20px;
+  @media (max-width: $screen-sm-max) {
+    padding: 36px 22px;
+  }
+  h2 {
+    font-family: $grot;
+    font-weight: 700;
+    font-size: 40px;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin: 0;
+    @media (max-width: $screen-sm-max) {
+      font-size: 28px;
+    }
+  }
+  &__prompt {
+    color: var(--green);
+    margin-top: 16px;
+    font-family: $mono;
+    font-size: 14px;
+  }
+  &__btn {
+    margin-top: 22px;
+  }
+}
+
+// ---- footer ------------------------------------------------------
+.footer__container {
+  font-family: $mono;
+  max-width: $maxw;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 48px 56px;
+  border-top: 1px solid var(--line);
+  .social-icons {
+    gap: 22px;
+    @include themed() {
+      filter: t($social-icons-color);
+    }
+  }
+  .salutation {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 18px;
+    font-size: 13px;
+    span:nth-child(1) {
+      color: var(--accent-text);
+    }
+    span:nth-child(2) {
+      color: var(--ink-2);
+    }
+  }
+  @media (max-width: $screen-sm-max) {
+    padding: 30px 22px 40px;
+  }
+}
+
+// ---- resume ------------------------------------------------------
+.resume {
+  // Site has no global border-box reset (elements default to content-box),
+  // which made the horizontal padding add on top of the full width here and
+  // push the page wider than the viewport. Pin border-box for this subtree.
+  &,
+  * {
+    box-sizing: border-box;
+  }
+  max-width: $maxw;
+  margin: 0 auto;
+  padding: 24px 48px 72px;
+  @media (max-width: $screen-sm-max) {
+    padding: 16px 22px 48px;
+  }
+  // PDF canvas: keep the pixel buffer (set via :width) but never let the
+  // rendered element push wider than its container — breaks the resize
+  // feedback loop that otherwise inflated .resume past the viewport.
+  .vue-pdf-embed,
+  .vue-pdf-embed__page,
+  .vue-pdf-embed canvas {
+    max-width: 100%;
+    height: auto;
+  }
+  &__links {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+    a {
+      font-family: $mono;
+      font-size: 13px;
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 5px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      &:hover {
+        border-color: var(--accent-text);
+        transform: translateY(-2px);
+      }
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    a:first-child {
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 700;
+      border-color: transparent;
+    }
+  }
+}
+
+// ---- page intro (projects / resume headers) ----------------------
+.page-head {
+  // vertical only — horizontal padding comes from .shell (see .sec note).
+  padding-block: 60px 8px;
+  &__tag {
+    color: var(--ink-2);
+    font-size: 13px;
+    font-family: $mono;
+    .h {
+      color: var(--accent-text);
+    }
+  }
+  &__title {
+    font-family: $grot;
+    font-weight: 700;
+    font-size: 56px;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin: 14px 0 0;
+    @media (max-width: $screen-sm-max) {
+      font-size: 38px;
+    }
+  }
+  &__sub {
+    color: var(--ink-2);
+    font-family: $grot;
+    font-size: 18px;
+    margin-top: 12px;
+    max-width: 52ch;
+  }
+}

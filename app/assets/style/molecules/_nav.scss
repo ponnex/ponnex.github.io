@@ -1,0 +1,28 @@
+.header__links {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  list-style-type: none;
+  max-height: $navbar-height;
+
+  li > a {
+    font-family: 'CarmenSans-Medium';
+    color: $mid-gray;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  li.active > a {
+    font-family: 'CarmenSans-SemiBold';
+
+    @include themed() {
+      color: t($nav-text);
+    }
+  }
+
+  .icon {
+    margin-left: 24px;
+  }
+}

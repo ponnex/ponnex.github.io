@@ -1,0 +1,30 @@
+/*
+* Animations
+*/
+.anim-all {
+  transition: all ease-in-out 0.4s;
+}
+
+.anim-opacity {
+  transition: opacity ease-in-out 0.4s;
+}
+
+@keyframes spin {
+  from {
+    transform: translate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+* Headings
+*/
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 0.85em;
+  letter-spacing: 0.7px;
+}

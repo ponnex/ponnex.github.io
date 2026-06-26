@@ -1,0 +1,53 @@
+.footer {
+  &__container {
+    font-family: 'CarmenSans-Medium';
+    max-width: 1600px;
+    text-align: center;
+    padding: 54px;
+
+    .easegg {
+      text-decoration: none;
+      animation: cursorAnimate 0.25s infinite;
+    }
+
+    @keyframes cursorAnimate {
+      0% {
+        cursor: url('../../images/flappy0.png'), pointer;
+      }
+      33% {
+        cursor: url('../../images/flappy1.png'), pointer;
+      }
+      66% {
+        cursor: url('../../images/flappy2.png'), pointer;
+      }
+      100% {
+        cursor: url('../../images/flappy3.png'), pointer;
+      }
+    }
+
+    .salutation {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 15px;
+      font-size: 14px;
+      span:nth-child(1) {
+        font-family: 'CarmenSans-Heavy';
+        color: $yellow-sea;
+      }
+      span:nth-child(2) {
+        @include themed() {
+          color: t($footer-salutation-text-2);
+        }
+      }
+    }
+
+    @media (max-width: $screen-md-max) {
+      padding: $spacer--default $spacer--large $spacer--large;
+    }
+
+    @media (max-width: $screen-sm-max) {
+      padding: $spacer--medium $spacer--medium;
+    }
+  }
+}

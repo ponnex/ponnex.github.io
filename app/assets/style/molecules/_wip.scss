@@ -1,0 +1,38 @@
+.wip {
+  &__container {
+    padding: 220px 0;
+    @media (max-width: $screen-sm-max) {
+      padding: 100px 0;
+    }
+    @include themed() {
+      background-color: t($wip-bg);
+    }
+
+    span {
+      display: block;
+      font-family: 'CarmenSans-SemiBold';
+      font-size: 32px;
+      color: $athens-gray;
+      text-align: center;
+      margin: 0 auto;
+      max-width: 1600px;
+      @media (max-width: $screen-sm-max) {
+        font-size: 18px;
+      }
+    }
+
+    svg {
+      display: block;
+      margin: 0 auto 75px;
+      @media (max-width: $screen-sm-max) {
+        height: 125px;
+        width: 153px;
+      }
+      path {
+        @include themed() {
+          fill: t($icon-wip);
+        }
+      }
+    }
+  }
+}

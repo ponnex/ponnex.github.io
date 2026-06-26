@@ -1,0 +1,10 @@
+[build]
+  command = "npm run generate"
+  publish = ".output/public"
+
+# SPA fallback: ssr is disabled, so every route must serve index.html
+# and let the client router resolve it.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

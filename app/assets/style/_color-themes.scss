@@ -1,0 +1,89 @@
+//shortcuts
+$bg: 'bg';
+$text: 'text';
+$text-secondary: 'text-secondary';
+$nav-text: 'nav-text';
+$nav-selector-color: 'nav-selector-color';
+$article-content-color: 'article-content-color';
+$article-subcontent-color: 'article-subcontent-color';
+$hero-heading-color: 'hero-heading-color';
+$social-icons-filter: 'social-icons-filter';
+$hover: 'hover';
+$card-bg: 'card-bg';
+$footer-title: 'footer-title-dark';
+$footer-title-desc: 'footer-title-desc';
+$footer-icon-email: 'footer-icon-email';
+$footer-salutation-text-1: 'footer-salutation-text-1';
+$footer-salutation-text-2: 'footer-salutation-text-2';
+$social-icons-color: 'social-icons-color';
+$wip-bg: 'wip-bg';
+$icon-wip: 'icon-wip';
+
+//themes
+$themes: (
+  default: (
+    bg: $bg--dark,
+    text: $text--dark,
+    nav-text: $athens-gray,
+    nav-selector-color: $yellow-sea,
+    article-content-color: $athens-gray,
+    article-subcontent-color: $alto,
+    hero-heading-color: $athens-gray,
+    social-icons-filter: $social-icons-light,
+    hover: $hover--dark,
+    card-bg: $bg--card--dark,
+    footer-title: $footer--title-dark,
+    footer-title-desc: $footer--title-desc-dark,
+    footer-icon-email: $footer--icon-email-dark,
+    footer-salutation-text-1: $footer--salutation-text-1-dark,
+    footer-salutation-text-2: $footer--salutation-text-2-dark,
+    social-icons-color: brightness(1),
+    wip-bg: $wip--bg-dark,
+    icon-wip: $icon--wip-dark,
+    text-secondary: $text-secondary--dark
+  ),
+  light: (
+    bg: $bg--light,
+    text: $text--light,
+    nav-text: $yellow-sea,
+    nav-selector-color: $yellow-sea,
+    article-content-color: $mine-shaft,
+    article-subcontent-color: $dove-gray,
+    hero-heading-color: $mine-shaft,
+    social-icons-filter: $social-icons-dark,
+    hover: $hover--light,
+    card-bg: $bg--card--light,
+    footer-title: $footer--title-light,
+    footer-title-desc: $footer--title-desc-light,
+    footer-icon-email: $footer--icon-email-light,
+    footer-salutation-text-1: $footer--salutation-text-1-light,
+    footer-salutation-text-2: $footer--salutation-text-2-light,
+    social-icons-color: brightness(0.2),
+    wip-bg: $wip--bg-light,
+    icon-wip: $icon--wip-light,
+    text-secondary: $text-secondary--light
+  )
+);
+
+@mixin themed() {
+  @each $theme, $map in $themes {
+    .theme--#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function t($key) {
+  @return map-get($theme-map, $key);
+}

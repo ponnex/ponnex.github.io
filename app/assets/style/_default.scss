@@ -1,0 +1,44 @@
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0 0 1.5em;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  background: none;
+}
+
+textarea {
+  border: 0;
+}
+
+select {
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+input {
+  font-weight: 400;
+  border: 0;
+  outline: 0;
+  border: 0;
+  @include themed() {
+    color: t($text);
+  }
+}
