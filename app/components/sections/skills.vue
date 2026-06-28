@@ -1,23 +1,24 @@
 <template>
-	<section id="skills" class="sec shell">
-		<div class="sec-head">
+	<section id="skills" ref="sectionEl" class="sec shell">
+		<h2 class="sec-head">
 			<span class="h">//</span> skills
 			<span class="rule"></span>
-			<span>stack proficiency</span>
-		</div>
-		<div class="skills">
-			<div v-for="g in skillGroups" :key="g.group" class="skillgrp">
+			<span>tools in production</span>
+		</h2>
+		<div class="skills" :class="{ 'skills--visible': visible }">
+			<div
+				v-for="(g, gi) in skillGroups"
+				:key="g.group"
+				class="skillgrp"
+				:style="{ '--stagger': gi }"
+			>
 				<div class="skillgrp__head"><span class="h">#</span> {{ g.group }}</div>
 				<div v-for="s in g.items" :key="s.name" class="skillgrp__r">
 					<span class="skillgrp__name">{{ s.name }}</span>
 					<span
-						class="skillgrp__meter"
-						role="img"
-						:aria-label="`${s.name}: ${s.label}, ${s.level} out of 5`"
-					>
-						<i v-for="n in 5" :key="n" :class="{ on: n <= s.level }" aria-hidden="true"></i>
-					</span>
-					<span class="skillgrp__lvl">{{ s.label }}</span>
+						class="skillgrp__tag"
+						:class="`skillgrp__tag--${s.context}`"
+					>[ {{ skillContextLabels[s.context] }} ]</span>
 				</div>
 			</div>
 		</div>
@@ -25,5 +26,27 @@
 </template>
 
 <script setup lang="ts">
-import { skillGroups } from '~/data/skills'
+import { skillGroups, skillContextLabels } from '~/data/skills'
+
+const sectionEl = ref<HTMLElement | null>(null)
+const visible = ref(false)
+const { reducedMotion } = useReducedMotion()
+
+onMounted(() => {
+	if (reducedMotion.value) {
+		visible.value = true
+		return
+	}
+	if (!sectionEl.value) return
+	const observer = new IntersectionObserver(
+		([entry]) => {
+			if (entry?.isIntersecting) {
+				visible.value = true
+				observer.disconnect()
+			}
+		},
+		{ threshold: 0.12 },
+	)
+	observer.observe(sectionEl.value)
+})
 </script>

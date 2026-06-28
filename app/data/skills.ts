@@ -1,14 +1,21 @@
-// Skill proficiency, grouped by category. `level` is a 1–5 tier (not a fake
-// percentage) — 5 = expert, 4 = strong, 3 = working. Tune to your real strengths.
+// Skills grouped by category. `context` describes how you use each tool in
+// production — not a self-rated score.
+export type SkillContext = 'daily_driver' | 'production_ready' | 'exploring'
+
 export interface Skill {
   name: string
-  level: 1 | 2 | 3 | 4 | 5
-  label: 'expert' | 'strong' | 'working'
+  context: SkillContext
 }
 
 export interface SkillGroup {
   group: string // category label shown as `# frameworks`
   items: Skill[]
+}
+
+export const skillContextLabels: Record<SkillContext, string> = {
+  daily_driver: 'daily',
+  production_ready: 'production',
+  exploring: 'exploring',
 }
 
 // Grounded in the resume stack (Vue/Nuxt/React/Next, Vuex/Pinia/Redux,
@@ -17,46 +24,46 @@ export const skillGroups: SkillGroup[] = [
   {
     group: 'frameworks',
     items: [
-      { name: 'Vue · Nuxt', level: 5, label: 'expert' },
-      { name: 'React · Next.js', level: 4, label: 'strong' },
+      { name: 'Vue · Nuxt', context: 'daily_driver' },
+      { name: 'React · Next.js', context: 'production_ready' },
     ],
   },
   {
     group: 'languages',
     items: [
-      { name: 'TypeScript', level: 5, label: 'expert' },
-      { name: 'JavaScript', level: 5, label: 'expert' },
+      { name: 'TypeScript', context: 'daily_driver' },
+      { name: 'JavaScript', context: 'daily_driver' },
     ],
   },
   {
     group: 'styling · ui',
     items: [
-      { name: 'SCSS · CSS', level: 5, label: 'expert' },
-      { name: 'Tailwind', level: 5, label: 'expert' },
-      { name: 'Material UI', level: 4, label: 'strong' },
+      { name: 'SCSS · CSS', context: 'daily_driver' },
+      { name: 'Tailwind', context: 'daily_driver' },
+      { name: 'Material UI', context: 'production_ready' },
     ],
   },
   {
     group: 'state · data',
     items: [
-      { name: 'Pinia · Vuex', level: 5, label: 'expert' },
-      { name: 'Redux', level: 4, label: 'strong' },
-      { name: 'REST APIs', level: 4, label: 'strong' },
+      { name: 'Pinia · Vuex', context: 'daily_driver' },
+      { name: 'Redux', context: 'production_ready' },
+      { name: 'REST APIs', context: 'production_ready' },
     ],
   },
   {
     group: 'web3',
     items: [
-      { name: 'Internet Computer', level: 4, label: 'strong' },
-      { name: 'Bitcoin · canisters', level: 4, label: 'strong' },
+      { name: 'Internet Computer', context: 'production_ready' },
+      { name: 'Bitcoin · canisters', context: 'production_ready' },
     ],
   },
   {
     group: 'tooling · test',
     items: [
-      { name: 'Vite · Webpack', level: 4, label: 'strong' },
-      { name: 'Jest', level: 4, label: 'strong' },
-      { name: 'Git', level: 5, label: 'expert' },
+      { name: 'Vite · Webpack', context: 'production_ready' },
+      { name: 'Jest', context: 'production_ready' },
+      { name: 'Git', context: 'daily_driver' },
     ],
   },
 ]

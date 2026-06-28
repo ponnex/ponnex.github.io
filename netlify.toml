@@ -8,8 +8,10 @@
   # the `netlify` preset and writes output outside .output/public.
   NITRO_PRESET = "static"
 
-# SPA fallback: ssr is disabled, so every route must serve index.html
-# and let the client router resolve it.
+# Routes are prerendered to static HTML (ssr: true + nitro prerender), so
+# Netlify serves the matching file directly. This non-forced catch-all only
+# fires for paths with no prerendered file, letting the client router resolve
+# them (SPA fallback). Existing files always win over this rule.
 [[redirects]]
   from = "/*"
   to = "/index.html"
