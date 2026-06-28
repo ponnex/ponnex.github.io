@@ -1,9 +1,9 @@
 <template>
-	<section id="work" class="sec shell">
+	<section :id="sectionId" class="sec shell">
 		<div class="sec-head">
 			<span class="h">//</span> {{ heading }}
 			<span class="rule"></span>
-			<span>{{ items.length.toString().padStart(2, '0') }} projects</span>
+			<span>{{ total.toString().padStart(2, '0') }} projects</span>
 		</div>
 		<div class="work">
 			<component
@@ -40,11 +40,23 @@ const props = withDefaults(
 		heading?: string
 		featuredOnly?: boolean
 		showMore?: boolean
+		sectionId?: string
+		group?: 'professional' | 'personal'
 	}>(),
-	{ heading: 'selected_work', featuredOnly: false, showMore: false },
+	{ heading: 'selected_work', featuredOnly: false, showMore: false, sectionId: 'work' },
 )
 
+const grouped = computed<Project[]>(() => {
+	if (props.group === 'personal') return allProjects.filter((p) => p.group === 'personal')
+	if (props.group === 'professional') return allProjects.filter((p) => p.group !== 'personal')
+	return allProjects
+})
+
+// Cards shown — the featured subset when previewing, otherwise the whole group.
 const items = computed<Project[]>(() =>
-	props.featuredOnly ? allProjects.filter((p) => p.featured) : allProjects,
+	props.featuredOnly ? grouped.value.filter((p) => p.featured) : grouped.value,
 )
+
+// Badge count always reflects the full group, even when previewing fewer cards.
+const total = computed(() => grouped.value.length)
 </script>

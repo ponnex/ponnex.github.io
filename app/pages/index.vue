@@ -1,9 +1,10 @@
 <template>
 	<div class="portfolio">
 		<LandingTemplate />
-		<WorkSection featured-only show-more />
-		<SkillsSection />
 		<AboutSection />
+		<SkillsSection />
+		<WorkSection group="professional" heading="client_work" featured-only show-more />
+		<WorkSection section-id="work-personal" group="personal" heading="solo_work" featured-only show-more />
 		<ContactSection />
 	</div>
 </template>

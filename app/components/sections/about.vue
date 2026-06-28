@@ -8,7 +8,7 @@
 		<div class="about">
 			<div class="about__blk">
 				<h4># background</h4>
-				<p>Frontend developer with <b>8+ years</b> turning complex requirements into interfaces that feel effortless. I own features end-to-end — from discovery to design system to ship.</p>
+				<p>Frontend developer with <b>{{ yearsExperience }}+ years</b> turning complex requirements into interfaces that feel effortless. I own features end-to-end — from discovery to design system to ship.</p>
 			</div>
 			<div class="about__blk">
 				<h4># now</h4>
@@ -33,4 +33,8 @@
 
 <script setup lang="ts">
 import { services } from '~/data/skills'
+
+// Years of experience, derived from the career start year so the copy never goes stale.
+const CAREER_START_YEAR = 2017
+const yearsExperience = computed(() => new Date().getFullYear() - CAREER_START_YEAR)
 </script>

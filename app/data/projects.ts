@@ -1,5 +1,5 @@
-// Selected work shown on the home page (preview) and the /projects page (full list).
-// Seeded from the resume. Add `link` URLs and screenshots when you have them.
+// Work shown on the home page (preview) and the /projects page (full list).
+// Two groups: client work I'm part of (omit `group`) and projects I built myself (`group: 'personal'`).
 export interface Project {
   id: string;
   file: string; // shown in the card's top bar, e.g. "toniq.vue"
@@ -10,6 +10,7 @@ export interface Project {
   stack: string[];
   link?: string; // external URL; omit if none yet
   featured?: boolean; // featured items appear in the home preview
+  group?: 'professional' | 'personal'; // omit/'professional' = client work; 'personal' = built solo
 }
 
 export const projects: Project[] = [
@@ -127,5 +128,118 @@ export const projects: Project[] = [
     description:
       'A NativeScript app integrating with the Xerkit IoT car product — automatic ignition, climate, and lock/unlock control.',
     stack: ['NativeScript', 'Vue', 'IoT'],
+  },
+
+  // ── Projects I did myself ───────────────────────────────────────────────
+  {
+    id: 'pokedex',
+    file: 'pokedex.vue',
+    title: 'Pokédex',
+    category: 'pwa / pokéapi',
+    year: '2021',
+    group: 'personal',
+    description:
+      'A Pokédex Progressive Web App powered by the PokéAPI, built with Nuxt.js and Tailwind CSS.',
+    stack: ['Nuxt', 'Vue', 'Tailwind', 'PWA'],
+    link: 'https://ponnex-pokedex.netlify.app/',
+    featured: true,
+  },
+  {
+    id: 'edvan',
+    file: 'edspeciallyforvan.vue',
+    title: 'EDspecially for VAN',
+    category: 'wedding / invitation',
+    year: '2022',
+    group: 'personal',
+    description:
+      'A tailor-made digital wedding invitation website built for a couple to share their day online.',
+    stack: ['Vue', 'Nuxt', 'SCSS'],
+    link: 'https://edspeciallyforvan.netlify.app/',
+    featured: true,
+  },
+  {
+    id: 'flappy',
+    file: 'flappy-bird.js',
+    title: 'PWA Flappy Bird',
+    category: 'pwa / game',
+    year: '2017',
+    group: 'personal',
+    description:
+      'A Flappy Bird clone built as a Progressive Web App to demo offline play and installability — first shown at GDG DevFest \'17.',
+    stack: ['JavaScript', 'PWA', 'Canvas'],
+    link: 'https://floppy-bird-pwa.web.app/',
+    featured: true,
+  },
+  {
+    id: 'restosearch',
+    file: 'restosearch.java',
+    title: 'RestoSearch',
+    category: 'food delivery / mobile',
+    year: '2015',
+    group: 'personal',
+    description:
+      'A food-delivery app built back in 2015 in the spirit of DoorDash, Uber Eats and Foodpanda — browse restaurants, order and track delivery.',
+    stack: ['Java', 'Android'],
+    link: 'https://github.com/ponnex/RestoSearch',
+    featured: true,
+  },
+  {
+    id: 'finefoods',
+    file: 'fine-foods.vue',
+    title: "Ponnex's Fine Foods",
+    category: 'food / concept / spa',
+    year: '2020',
+    group: 'personal',
+    description:
+      'A Nuxt + TypeScript single-page web app for a fine-foods concept, designed from a Dribbble shot.',
+    stack: ['Nuxt', 'Vue', 'TypeScript'],
+    link: 'https://blissful-pike-8519e9.netlify.app/',
+  },
+  {
+    id: 'waterbill',
+    file: 'waterbill.java',
+    title: 'WaterBill',
+    category: 'iot / mobile',
+    year: '2016',
+    group: 'personal',
+    description:
+      'An Android companion app for an IoT device that tracks and measures household water consumption and billing.',
+    stack: ['Java', 'Android', 'IoT'],
+    link: 'https://github.com/ponnex/WaterBill',
+  },
+  {
+    id: 'rrsdas',
+    file: 'rrsdas.html',
+    title: 'Remote Rain & Stream Monitoring',
+    category: 'iot / monitoring / pwa',
+    year: '2016',
+    group: 'personal',
+    description:
+      'A Progressive Web App for remote rain and stream monitoring — an early-warning system for flash floods and micro-hydro site surveys, fed by SMS-relayed sensor data.',
+    stack: ['PWA', 'Raspberry Pi', 'IoT', 'SMS'],
+    link: 'https://github.com/ponnex/Remote-Rain-and-Stream-Data-Acquisition-System-Progressive-Web-App',
+  },
+  {
+    id: 'justdrive',
+    file: 'just-drive.java',
+    title: 'Just Drive',
+    category: 'safety / mobile',
+    year: '2015',
+    group: 'personal',
+    description:
+      'An Android app that curbs distracted driving — "no text, tweet, or email is worth your life. Put the phone down and just drive."',
+    stack: ['Java', 'Android'],
+    link: 'https://github.com/ponnex/Just-Drive',
+  },
+  {
+    id: 'snapforus',
+    file: 'snapforus.tsx',
+    title: 'SnapForUs',
+    category: 'events / photos',
+    year: '2025',
+    group: 'personal',
+    description:
+      'A QR-based event photo-sharing app — guests scan a code to join an event and share moments to a shared gallery.',
+    stack: ['React', 'Tailwind', 'QR'],
   },
 ];

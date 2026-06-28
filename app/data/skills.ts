@@ -1,19 +1,64 @@
-// Skill proficiency table. Adjust names / levels / labels to your real strengths.
+// Skill proficiency, grouped by category. `level` is a 1–5 tier (not a fake
+// percentage) — 5 = expert, 4 = strong, 3 = working. Tune to your real strengths.
 export interface Skill {
   name: string
-  level: number // 0-100, drives the bar width
-  label: string // short proficiency word
+  level: 1 | 2 | 3 | 4 | 5
+  label: 'expert' | 'strong' | 'working'
+}
+
+export interface SkillGroup {
+  group: string // category label shown as `# frameworks`
+  items: Skill[]
 }
 
 // Grounded in the resume stack (Vue/Nuxt/React/Next, Vuex/Pinia/Redux,
-// SCSS/Tailwind/MUI, Jest). Levels are subjective — tune to taste before publishing.
-export const skills: Skill[] = [
-  { name: 'Vue · Nuxt', level: 95, label: 'expert' },
-  { name: 'TypeScript · JS', level: 88, label: 'strong' },
-  { name: 'React · Next.js', level: 80, label: 'strong' },
-  { name: 'SCSS · Tailwind · MUI', level: 92, label: 'expert' },
-  { name: 'State (Pinia · Vuex · Redux)', level: 86, label: 'strong' },
-  { name: 'Web3 · Internet Computer', level: 78, label: 'strong' },
+// SCSS/Tailwind/MUI, Jest) plus the crypto / Internet Computer work.
+export const skillGroups: SkillGroup[] = [
+  {
+    group: 'frameworks',
+    items: [
+      { name: 'Vue · Nuxt', level: 5, label: 'expert' },
+      { name: 'React · Next.js', level: 4, label: 'strong' },
+    ],
+  },
+  {
+    group: 'languages',
+    items: [
+      { name: 'TypeScript', level: 5, label: 'expert' },
+      { name: 'JavaScript', level: 5, label: 'expert' },
+    ],
+  },
+  {
+    group: 'styling · ui',
+    items: [
+      { name: 'SCSS · CSS', level: 5, label: 'expert' },
+      { name: 'Tailwind', level: 5, label: 'expert' },
+      { name: 'Material UI', level: 4, label: 'strong' },
+    ],
+  },
+  {
+    group: 'state · data',
+    items: [
+      { name: 'Pinia · Vuex', level: 5, label: 'expert' },
+      { name: 'Redux', level: 4, label: 'strong' },
+      { name: 'REST APIs', level: 4, label: 'strong' },
+    ],
+  },
+  {
+    group: 'web3',
+    items: [
+      { name: 'Internet Computer', level: 4, label: 'strong' },
+      { name: 'Bitcoin · canisters', level: 4, label: 'strong' },
+    ],
+  },
+  {
+    group: 'tooling · test',
+    items: [
+      { name: 'Vite · Webpack', level: 4, label: 'strong' },
+      { name: 'Jest', level: 4, label: 'strong' },
+      { name: 'Git', level: 5, label: 'expert' },
+    ],
+  },
 ]
 
 // What you offer clients — shown in the About / Services section.
