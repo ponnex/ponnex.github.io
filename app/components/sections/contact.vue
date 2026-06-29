@@ -15,62 +15,150 @@
           @click="copy(email)"
         >
           <span class="theme-toggle__bracket">[</span>
-          <span class="theme-toggle__label">{{ copied ? 'copied' : 'copy' }}</span>
+          <span class="theme-toggle__label">{{
+            copied ? 'copied' : 'copy'
+          }}</span>
           <span class="theme-toggle__bracket">]</span>
         </button>
       </div>
       <div class="cta__actions">
-        <a class="btn btn--primary cta__btn" :href="`mailto:${email}`">email me →</a>
-        <NuxtLink class="btn btn--ghost cta__btn-secondary" to="/resume">view resume</NuxtLink>
+        <a class="btn btn--primary cta__btn" :href="`mailto:${email}`"
+          >email me →</a
+        >
+        <NuxtLink class="btn btn--ghost cta__btn-secondary" to="/resume"
+          >view resume</NuxtLink
+        >
       </div>
     </div>
 
     <!--
-      Prefer-a-form path. Handled by Netlify Forms: the form is statically
-      prerendered (ssr: true), so Netlify's build bot detects it by name and a
-      successful POST redirects to /thankyou. The honeypot field traps bots.
+      Prefer-a-form path. Submits directly to Web3Forms, which emails the
+      message to the inbox tied to the access key below. On success we route to
+      /thankyou. No backend / Netlify Forms involved.
     -->
     <div class="cform">
       <div class="cform__bar" aria-hidden="true">
-        <i style="background: #ff5f56"></i><i style="background: #ffbd2e"></i><i
-          style="background: #27c93f"
-        ></i>
+        <i style="background: #ff5f56"></i><i style="background: #ffbd2e"></i
+        ><i style="background: #27c93f"></i>
         <span class="fn">message.txt</span>
       </div>
-      <form
-        class="cform__body"
-        name="contact"
-        method="POST"
-        action="/thankyou"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-      >
-        <input type="hidden" name="form-name" value="contact" />
-        <p class="cform__hp" hidden>
-          <label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
-        </p>
+      <form class="cform__body" novalidate @submit.prevent="onSubmit">
+        <!-- Honeypot: real users never see or fill this; bots do. -->
+        <input
+          v-model="honeypot"
+          type="checkbox"
+          name="botcheck"
+          class="cform__hp"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+        />
 
         <div class="cform__row">
           <label class="cform__field">
-            <span class="cform__label"><span class="c-accent">#</span> name</span>
-            <input id="cf-name" type="text" name="name" required autocomplete="name" />
+            <span class="cform__label"
+              ><span class="c-accent">#</span> name</span
+            >
+            <input
+              id="cf-name"
+              v-model.trim="formData.name"
+              type="text"
+              required
+              autocomplete="name"
+              :disabled="sending"
+            />
           </label>
           <label class="cform__field">
-            <span class="cform__label"><span class="c-accent">#</span> email</span>
-            <input id="cf-email" type="email" name="email" required autocomplete="email" />
+            <span class="cform__label"
+              ><span class="c-accent">#</span> email</span
+            >
+            <input
+              id="cf-email"
+              v-model.trim="formData.email"
+              type="email"
+              required
+              autocomplete="email"
+              :disabled="sending"
+            />
           </label>
         </div>
         <label class="cform__field">
-          <span class="cform__label"><span class="c-accent">#</span> message</span>
-          <textarea id="cf-message" name="message" rows="4" required></textarea>
+          <span class="cform__label"
+            ><span class="c-accent">#</span> message</span
+          >
+          <textarea
+            id="cf-message"
+            v-model.trim="formData.message"
+            rows="4"
+            required
+            :disabled="sending"
+          ></textarea>
         </label>
-        <button type="submit" class="btn btn--primary cform__submit">send message →</button>
+
+        <p v-if="error" class="cform__error" role="alert">{{ error }}</p>
+
+        <button
+          type="submit"
+          class="btn btn--primary cform__submit"
+          :disabled="sending"
+        >
+          {{ sending ? 'sending…' : 'send message →' }}
+        </button>
       </form>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-const email = 'hello@ponnex.dev'
-const { copied, copy } = useCopyText()
+// Web3Forms access key — SAFE to expose in client code (it only allows
+// submitting to the inbox you configured; it grants no read access). Get a free
+// key at https://web3forms.com (enter hello@ponnex.dev — the key is emailed
+// instantly), then paste it here.
+const WEB3FORMS_ACCESS_KEY = 'f24d2260-a575-405a-a9a1-9b2e55a55ec3';
+
+const email = 'hello@ponnex.dev';
+const { copied, copy } = useCopyText();
+
+const formData = reactive({ name: '', email: '', message: '' });
+const honeypot = ref(false);
+const sending = ref(false);
+const error = ref('');
+
+async function onSubmit() {
+  // Bot tripped the honeypot — pretend success, send nothing.
+  if (honeypot.value) {
+    await navigateTo('/thankyou');
+    return;
+  }
+
+  error.value = '';
+  sending.value = true;
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: `New message from ${formData.name || 'ponnex.dev'}`,
+        from_name: 'ponnex.dev contact form',
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      await navigateTo('/thankyou');
+    } else {
+      throw new Error(data.message || 'submit failed');
+    }
+  } catch {
+    error.value = `Couldn't send — please email me directly at ${email}.`;
+  } finally {
+    sending.value = false;
+  }
+}
 </script>
