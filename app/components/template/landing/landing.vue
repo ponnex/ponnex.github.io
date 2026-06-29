@@ -1,6 +1,6 @@
 <template>
 	<section class="hero shell">
-		<div class="hero__tag"><span class="c-accent">$</span> whoami <span class="c-dim">— frontend developer</span></div>
+		<div class="hero__tag"><span class="c-accent">$</span> whoami <span class="c-dim">— frontend engineer</span></div>
 		<h1 class="hero__name">Emmanuel Francis<br><span class="y">Ramos</span></h1>
 		<div class="hero__flex">
 			<div>

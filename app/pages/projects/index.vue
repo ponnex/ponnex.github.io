@@ -36,4 +36,14 @@ import { projectFilters } from '~/data/projects'
 
 const activeFilter = ref('all')
 const filterTags = computed(() => ['all', ...projectFilters.map((b) => b.label)])
+
+// Canonical + og:url come from app.vue (per-route, trailing-slash form).
+useSeoMeta({
+	title: 'Selected Work — Emmanuel Francis Ramos, Frontend Engineer',
+	description:
+		'Frontend engineering work by Emmanuel Francis Ramos across airlines, banking, e-commerce and crypto — Singapore Airlines, Toniq, Odin.fun, Bioniq and more.',
+	ogTitle: 'Selected Work — Emmanuel Francis Ramos, Frontend Engineer',
+	ogDescription:
+		'Frontend engineering work across airlines, banking, e-commerce and crypto — Singapore Airlines, Toniq, Odin.fun and more.',
+})
 </script>

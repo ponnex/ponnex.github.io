@@ -8,11 +8,14 @@
   # the `netlify` preset and writes output outside .output/public.
   NITRO_PRESET = "static"
 
-# Routes are prerendered to static HTML (ssr: true + nitro prerender), so
-# Netlify serves the matching file directly. This non-forced catch-all only
-# fires for paths with no prerendered file, letting the client router resolve
-# them (SPA fallback). Existing files always win over this rule.
+# Every route is prerendered to static HTML (ssr: true + nitro prerender), and
+# existing files always win over this rule — so Netlify serves real pages
+# directly. This non-forced catch-all therefore only fires for genuinely missing
+# paths: serve the 404 page with a real 404 status (not index.html/200, which
+# made every dead URL a "soft 404" — indexable duplicate homepage content). The
+# 404.html SPA shell hydrates and the client router renders the in-app
+# "not found" view for the requested path.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404

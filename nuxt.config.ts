@@ -12,45 +12,67 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
+      // '/' is the crawl seed — it reaches every project slug via on-page links,
+      // which @nuxtjs/sitemap then discovers for /sitemap.xml. See docs/STRUCTURE.md.
       routes: ['/'],
     },
   },
 
-  modules: ['@vueuse/nuxt'],
+  modules: ['@vueuse/nuxt', '@nuxtjs/sitemap'],
+
+  // Canonical domain + trailing-slash form, consumed by @nuxtjs/sitemap (and
+  // nuxt-site-config). The prerendered output is directory-style
+  // (/projects/sia/index.html), so the 200 URL is the trailing-slash one and
+  // every <loc> must match it — no-slash URLs 301-redirect.
+  site: {
+    url: 'https://ponnex.dev',
+    trailingSlash: true,
+  },
+
+  // @nuxtjs/sitemap auto-discovers every prerendered route (crawlLinks reaches
+  // all project slugs from '/'), so adding a project to app/data/projects.ts
+  // flows into /sitemap.xml automatically. /thankyou is noindex; the résumé PDF
+  // is a static file (not a route) so it is added explicitly.
+  sitemap: {
+    exclude: ['/thankyou', '/thankyou/'],
+    urls: ['/ramos_resume.pdf'],
+  },
 
   app: {
     head: {
-      title: 'Emmanuel Francis Ramos — Frontend Developer',
+      htmlAttrs: { lang: 'en' },
+      title: 'Emmanuel Francis Ramos — Frontend Engineer',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
           content:
-            'Frontend developer — Vue, Nuxt, React, TypeScript. Shipped work for Singapore Airlines, Toniq, Odin.fun, and more.',
+            'Frontend engineer — Vue, Nuxt, React, Next.js, TypeScript. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
         },
-        { property: 'og:title', content: 'Emmanuel Francis Ramos — Frontend Developer' },
+        { property: 'og:title', content: 'Emmanuel Francis Ramos — Frontend Engineer' },
         {
           property: 'og:description',
           content:
-            'Frontend developer — Vue, Nuxt, React, TypeScript. Shipped work for Singapore Airlines, Toniq, Odin.fun, and more.',
+            'Frontend engineer — Vue, Nuxt, React, Next.js, TypeScript. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
         },
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://ponnex.dev/' },
+        // og:url is set per-route in app.vue (canonical, trailing-slash form),
+        // not here — a global value would point every page at the site root.
         { property: 'og:image', content: 'https://ponnex.dev/og.png' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
         {
           property: 'og:image:alt',
-          content: 'Emmanuel Francis Ramos — Frontend Developer',
+          content: 'Emmanuel Francis Ramos — Frontend Engineer',
         },
         // Large image card so the preview is a banner, not a tiny thumbnail.
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Emmanuel Francis Ramos — Frontend Developer' },
+        { name: 'twitter:title', content: 'Emmanuel Francis Ramos — Frontend Engineer' },
         {
           name: 'twitter:description',
           content:
-            'Frontend developer — Vue, Nuxt, React, TypeScript. Shipped work for Singapore Airlines, Toniq, Odin.fun, and more.',
+            'Frontend engineer — Vue, Nuxt, React, Next.js, TypeScript. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
         },
         { name: 'twitter:image', content: 'https://ponnex.dev/og.png' },
       ],

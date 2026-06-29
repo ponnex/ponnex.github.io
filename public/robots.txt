@@ -1,0 +1,9 @@
+# https://ponnex.dev — Emmanuel Francis Ramos, Frontend Engineer.
+# Recruiters & search engines welcome — everything below is crawlable.
+User-agent: *
+Allow: /
+# Post-submit confirmation page; no SEO value.
+Disallow: /thankyou
+Disallow: /thankyou/
+
+Sitemap: https://ponnex.dev/sitemap.xml

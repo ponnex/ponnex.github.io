@@ -46,4 +46,6 @@ const email = 'hello@ponnex.dev'
 const { copied, copy } = useCopyText()
 
 useHead({ title: 'Thank you — Ponnex Portfolio' })
+// Post-submit confirmation page — keep it out of the index.
+useSeoMeta({ robots: 'noindex, follow' })
 </script>

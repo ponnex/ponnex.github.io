@@ -77,9 +77,27 @@ const initials = computed(() => {
 		.toUpperCase()
 })
 
-useHead({
-	title: computed(() =>
-		project.value ? `${project.value.title} — Ponnex Portfolio` : 'Project — Ponnex Portfolio',
-	),
+// Canonical + og:url come from app.vue (per-route, trailing-slash form).
+const SITE = 'https://ponnex.dev'
+
+// Per-project meta: a crawler/recruiter landing on a case-study URL gets a
+// title, summary and preview describing that specific project — not the
+// homepage defaults.
+useSeoMeta({
+	title: () =>
+		project.value
+			? `${project.value.title} — Emmanuel Francis Ramos`
+			: 'Project — Emmanuel Francis Ramos',
+	description: () =>
+		project.value
+			? `${project.value.role ? project.value.role + ' · ' : ''}${project.value.description}`
+			: 'Frontend engineering case study by Emmanuel Francis Ramos.',
+	ogTitle: () =>
+		project.value
+			? `${project.value.title} — Emmanuel Francis Ramos`
+			: 'Project — Emmanuel Francis Ramos',
+	ogDescription: () => project.value?.description ?? '',
+	ogImage: () =>
+		project.value?.image ? `${SITE}${project.value.image}` : `${SITE}/og.png`,
 })
 </script>
