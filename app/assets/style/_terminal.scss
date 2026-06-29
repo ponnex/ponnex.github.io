@@ -619,9 +619,25 @@ button:focus-visible,
     border-bottom: 1px solid var(--line);
     color: var(--ink-2);
     font-size: 12px;
+    min-width: 0; // let the filename shrink instead of forcing the row wider
     .cat {
       color: var(--accent-text);
     }
+    // Narrow screens: the meta block (year + long category) used to win the
+    // row and crush the filename into a one-char-per-line column. Stack them so
+    // each gets a full line; the filename truncates rather than char-wrapping.
+    @media (max-width: $screen-sm-max) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+  }
+  &__file {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
   }
   &__meta {
     display: flex;
@@ -629,6 +645,11 @@ button:focus-visible,
     gap: 10px;
     text-align: right;
     flex-shrink: 0;
+    min-width: 0;
+    @media (max-width: $screen-sm-max) {
+      flex-wrap: wrap;
+      text-align: left;
+    }
   }
   &__year {
     color: var(--ink);
@@ -1257,6 +1278,14 @@ button:focus-visible,
 
 // ---- case study --------------------------------------------------
 .case-study {
+  // This site has no global border-box reset. As the page-root element, .shell
+  // here resolved to content-box: its 22px side padding stacked outside the
+  // viewport width and pushed the page ~44px wide, exposing the dark body bg as
+  // a gutter on mobile. Pin border-box locally (same fix as .thankyou).
+  &,
+  * {
+    box-sizing: border-box;
+  }
   padding-bottom: 72px;
   &__back {
     color: var(--accent-text);
@@ -1305,6 +1334,9 @@ button:focus-visible,
     border: 1px solid var(--line);
     border-radius: 8px;
     padding: 24px;
+    @media (max-width: $screen-sm-max) {
+      padding: 18px 20px;
+    }
     p {
       margin: 0;
       color: var(--ink-2);
@@ -1330,5 +1362,15 @@ button:focus-visible,
     flex-wrap: wrap;
     gap: 14px;
     margin-top: 32px;
+    // On phones the 3 buttons wrapped into an uneven 2 + 1. Stack them full
+    // width for clean, comfortable tap targets.
+    @media (max-width: $screen-sm-max) {
+      gap: 10px;
+      .btn {
+        flex: 1 1 100%;
+        text-align: center;
+        justify-content: center;
+      }
+    }
   }
 }

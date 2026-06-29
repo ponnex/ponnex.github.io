@@ -1,7 +1,7 @@
 <template>
 	<div class="pcard__inner">
 		<div class="pcard__top">
-			<span>{{ project.file }}</span>
+			<span class="pcard__file">{{ project.file }}</span>
 			<span class="pcard__meta">
 				<span class="pcard__year">{{ project.year }}</span>
 				<span class="cat">{{ project.category }}</span>

@@ -1,18 +1,12 @@
 <template>
-  <div class="theme" :class="`theme--${currentTheme}`">
-    <div class="base">
-      <div class="base__page">
-        <div>
-          <main class="body">
-            <slot />
-          </main>
-        </div>
-      </div>
-    </div>
+  <div class="theme">
+    <main class="ty-shell">
+      <slot />
+    </main>
   </div>
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const currentTheme = computed(() => (route.query.theme as string) || 'light')
+// Standalone confirmation page — no navbar. Theme comes from the <html> class
+// (set pre-paint by the inline script in nuxt.config), same as every other page.
 </script>
