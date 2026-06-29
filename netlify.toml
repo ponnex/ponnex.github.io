@@ -19,3 +19,22 @@
   from = "/*"
   to = "/404.html"
   status = 404
+
+# Baseline security headers. Hygiene rather than a ranking factor — HTTPS is
+# already enforced by Netlify. No CSP on purpose: the page ships an inline
+# theme script + inline critical CSS and the contact form POSTs to Web3Forms,
+# so a strict CSP would need hashes/allowlists and risks breaking those.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# Long-cache immutable build assets (content-hashed filenames).
+[[headers]]
+  for = "/_nuxt/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

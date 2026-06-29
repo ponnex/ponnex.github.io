@@ -23,6 +23,14 @@ export interface Project {
    * ranking + AI citation. Review/extend with first-hand detail where you can.
    */
   body?: string;
+  /**
+   * Optional search-result meta description (≤160 chars). Only set this when the
+   * default `role · description` would exceed ~160 and get truncated in SERPs
+   * (see `projectMetaDescription`). Keep it a complete, keyword-rich sentence —
+   * never a mid-word cut. `body` is still used for og:description and the
+   * on-page lead, where extra length is not penalised.
+   */
+  seoDescription?: string;
 }
 
 /**
@@ -67,6 +75,22 @@ export function allProjectFilterTags(list: Project[] = projects): string[] {
 
 export function getProjectById(id: string): Project | undefined {
   return projects.find((p) => p.id === id);
+}
+
+/**
+ * Search-result meta description for a case-study page. Google truncates around
+ * 155–160 chars, so this stays tight: an explicit `seoDescription` when set,
+ * otherwise `role · description` (the short summary — NOT the longer `body`,
+ * which is the on-page/og lead), with a word-boundary clamp as a final safety
+ * net so no page ever ships a description cut off mid-word. Keep results ≤160.
+ */
+export function projectMetaDescription(project: Project): string {
+  if (project.seoDescription) return project.seoDescription;
+  const base = `${project.role ? project.role + ' · ' : ''}${project.description}`;
+  if (base.length <= 160) return base;
+  const clamped = base.slice(0, 157);
+  const lastSpace = clamped.lastIndexOf(' ');
+  return (lastSpace > 0 ? clamped.slice(0, lastSpace) : clamped).trimEnd() + '…';
 }
 
 // Curated industry filters for the /projects filter bar. One chip per raw
@@ -139,6 +163,8 @@ export const projects: Project[] = [
     outcome: 'Shipped real-time trading UI against on-chain canisters with sub-second market updates.',
     body:
       'Odin.fun is a trading and blockchain-data platform built on the Internet Computer and Bitcoin. As frontend lead I built a UI that trades directly against ICP canisters, wired to a Kafka CDC pipeline streaming real-time on-chain updates — delivering sub-second market data to traders in a React and Tailwind interface.',
+    seoDescription:
+      'Frontend lead · Odin.fun, a React/Tailwind trading platform on the Internet Computer and Bitcoin — trades directly against ICP canisters with real-time data.',
   },
   {
     id: 'biennale',
@@ -397,6 +423,8 @@ export const projects: Project[] = [
     role: 'Developer',
     body:
       'A Progressive Web App for remote rain and stream monitoring — an early-warning system for flash floods and micro-hydro site surveys, fed by SMS-relayed sensor data from Raspberry Pi hardware.',
+    seoDescription:
+      'Developer · A Progressive Web App for remote rain and stream monitoring — flash-flood early warning fed by SMS-relayed Raspberry Pi sensor data.',
   },
   {
     id: 'justdrive',

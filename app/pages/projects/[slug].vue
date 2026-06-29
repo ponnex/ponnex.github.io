@@ -12,11 +12,15 @@
 			class="case-study__hero"
 			:style="{ '--thumb-hue': projectThumbHue(project.id) }"
 		>
-			<img
-				v-if="project.image"
-				:src="project.image"
-				:alt="`${project.title} preview`"
-			/>
+			<picture v-if="project.image">
+				<source :srcset="webpSrc" type="image/webp" />
+				<img
+					:src="project.image"
+					:alt="`${project.title} preview`"
+					:width="ogDims.w"
+					:height="ogDims.h"
+				/>
+			</picture>
 			<span v-else class="case-study__initials" aria-hidden="true">{{ initials }}</span>
 		</div>
 
@@ -25,17 +29,42 @@
 				<h2 class="case-study__label"># overview</h2>
 				<p>{{ project.body || project.description }}</p>
 			</div>
-			<div v-if="project.role" class="case-study__panel">
-				<h2 class="case-study__label"># role</h2>
-				<p>{{ project.role }}</p>
-			</div>
 			<div v-if="project.outcome" class="case-study__panel">
 				<h2 class="case-study__label"># outcome</h2>
 				<p>{{ project.outcome }}</p>
 			</div>
+			<!--
+				Key facts as a real <table>: a scannable, snippet-eligible summary
+				(role/year/industry/stack/status) that mirrors the CreativeWork JSON-LD
+				below. Replaces the old single-line role/stack panels so the same facts
+				aren't repeated twice.
+			-->
 			<div class="case-study__panel">
-				<h2 class="case-study__label"># stack</h2>
-				<p class="case-study__stack">{{ project.stack.join(' · ') }}</p>
+				<h2 class="case-study__label"># facts</h2>
+				<table class="case-study__facts">
+					<tbody>
+						<tr v-if="project.role">
+							<th scope="row">Role</th>
+							<td>{{ project.role }}</td>
+						</tr>
+						<tr>
+							<th scope="row">Year</th>
+							<td>{{ project.year }}</td>
+						</tr>
+						<tr>
+							<th scope="row">Industry</th>
+							<td>{{ project.category }}</td>
+						</tr>
+						<tr>
+							<th scope="row">Stack</th>
+							<td>{{ project.stack.join(', ') }}</td>
+						</tr>
+						<tr v-if="project.link">
+							<th scope="row">Status</th>
+							<td>{{ isRepo ? 'Open source · GitHub' : 'Live site' }}</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 
@@ -59,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { getProjectById, projectThumbHue, projectTags, projectImageDims } from '~/data/projects'
+import { getProjectById, projectThumbHue, projectTags, projectImageDims, projectMetaDescription } from '~/data/projects'
 
 const route = useRoute()
 const project = computed(() => getProjectById(String(route.params.slug)))
@@ -89,6 +118,9 @@ const ogDims = computed(
 	() => projectImageDims[String(route.params.slug)] ?? { w: 1200, h: 630 },
 )
 
+// WebP for the on-page hero; the JPG stays the <img> fallback + og:image source.
+const webpSrc = computed(() => project.value?.image?.replace(/\.jpe?g$/i, '.webp'))
+
 // Per-project meta: a crawler/recruiter landing on a case-study URL gets a
 // title, summary and preview describing that specific project — not the
 // homepage defaults.
@@ -97,9 +129,11 @@ useSeoMeta({
 		project.value
 			? `${project.value.title} — Emmanuel Francis Ramos`
 			: 'Project — Emmanuel Francis Ramos',
+	// Short, ≤160-char SERP description (role · short summary, clamped). The
+	// longer `body` is reserved for og:description and the on-page lead below.
 	description: () =>
 		project.value
-			? `${project.value.role ? project.value.role + ' · ' : ''}${project.value.body || project.value.description}`
+			? projectMetaDescription(project.value)
 			: 'Frontend engineering case study by Emmanuel Francis Ramos.',
 	ogTitle: () =>
 		project.value
@@ -171,3 +205,36 @@ useHead({
 	],
 })
 </script>
+
+<style scoped lang="scss">
+// Key-facts table: a tight two-column spec block in the terminal palette. Row
+// headers (<th scope="row">) keep it accessible and table-snippet eligible.
+.case-study__facts {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 14px;
+	line-height: 1.5;
+}
+.case-study__facts th,
+.case-study__facts td {
+	text-align: left;
+	vertical-align: top;
+	padding: 8px 0;
+	border-bottom: 1px solid var(--line);
+}
+.case-study__facts tr:last-child th,
+.case-study__facts tr:last-child td {
+	border-bottom: 0;
+}
+.case-study__facts th {
+	width: 30%;
+	padding-right: 16px;
+	font-weight: 600;
+	color: var(--ink-2);
+	font-family: 'JetBrains Mono', 'Menlo-Regular', ui-monospace, monospace;
+	white-space: nowrap;
+}
+.case-study__facts td {
+	color: var(--ink);
+}
+</style>

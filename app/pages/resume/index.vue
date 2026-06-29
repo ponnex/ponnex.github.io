@@ -85,6 +85,43 @@ useSeoMeta({
     'Frontend engineer, 9+ years. Vue, Nuxt, React, Next.js, TypeScript. Open to remote roles.',
 })
 
+// Structured data: mark the résumé as a ProfilePage about the SAME Person
+// entity declared on the home page (@id #person), plus a Home › Résumé
+// breadcrumb. Reusing the #person / #website @ids keeps one canonical entity
+// across the site instead of spawning a second, competing person node.
+const SITE = 'https://ponnex.dev'
+const resumeLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfilePage',
+      '@id': `${SITE}/resume/#profilepage`,
+      url: `${SITE}/resume/`,
+      name: 'Résumé — Emmanuel Francis Ramos, Frontend Engineer',
+      isPartOf: { '@id': `${SITE}/#website` },
+      about: { '@id': `${SITE}/#person` },
+      mainEntity: { '@id': `${SITE}/#person` },
+      inLanguage: 'en',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+        { '@type': 'ListItem', position: 2, name: 'Résumé', item: `${SITE}/resume/` },
+      ],
+    },
+  ],
+}
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(resumeLd),
+    },
+  ],
+})
+
 const resumeRef = ref<HTMLElement | null>(null)
 const pdfWidth = ref(MAX_WIDTH)
 

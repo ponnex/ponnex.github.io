@@ -8,12 +8,16 @@
 			</span>
 		</div>
 		<div class="pcard__media" :style="{ '--thumb-hue': projectThumbHue(project.id) }">
-			<img
-				v-if="project.image"
-				:src="project.image"
-				:alt="`${project.title} preview`"
-				loading="lazy"
-			/>
+			<picture v-if="project.image">
+				<source :srcset="webpSrc" type="image/webp" />
+				<img
+					:src="project.image"
+					:alt="`${project.title} preview`"
+					:width="dims?.w"
+					:height="dims?.h"
+					loading="lazy"
+				/>
+			</picture>
 			<span v-else class="pcard__initials" aria-hidden="true">{{ initials }}</span>
 			<span class="pcard__overlay" aria-hidden="true">
 				{{ project.link ? 'view project →' : 'case study →' }}
@@ -28,9 +32,15 @@
 </template>
 
 <script setup lang="ts">
-import { projectThumbHue, type Project } from '~/data/projects'
+import { projectThumbHue, projectImageDims, type Project } from '~/data/projects'
 
 const props = defineProps<{ project: Project }>()
+
+// Serve a lighter WebP to modern browsers, fall back to the JPG everywhere
+// else (and for og:image, which keeps pointing at the JPG). Real pixel dims
+// give the <img> an intrinsic aspect ratio so layout is reserved before load.
+const webpSrc = computed(() => props.project.image?.replace(/\.jpe?g$/i, '.webp'))
+const dims = computed(() => projectImageDims[props.project.id])
 
 const initials = computed(() =>
 	props.project.title

@@ -21,9 +21,9 @@
 				:open="i === 0"
 			>
 				<summary class="faq__q">
-					<span class="faq__qmark" aria-hidden="true">?</span>
+					<span class="faq__prompt" aria-hidden="true">?_</span>
 					<h3 class="faq__qtext">{{ item.q }}</h3>
-					<span class="faq__chev" aria-hidden="true">›</span>
+					<span class="faq__toggle" aria-hidden="true"></span>
 				</summary>
 				<p class="faq__a">{{ item.a }}</p>
 			</details>
@@ -88,24 +88,28 @@ useHead({
 </script>
 
 <style scoped lang="scss">
+// Terminal Q&A transcript: no boxes, a full-width stream. Each question is a
+// mono prompt line; the answer hangs under an accent gutter rule.
 .faq {
-	display: grid;
-	gap: 12px;
-	max-width: 820px;
+	display: flex;
+	flex-direction: column;
 }
 
 .faq__item {
-	border: 1px solid var(--line);
-	border-radius: 10px;
-	background: var(--panel);
-	overflow: hidden;
+	padding: 22px 0;
+	border-bottom: 1px solid var(--line);
+}
+.faq__item:first-child {
+	padding-top: 4px;
+}
+.faq__item:last-child {
+	border-bottom: 0;
 }
 
 .faq__q {
 	display: flex;
-	align-items: center;
-	gap: 12px;
-	padding: 16px 18px;
+	align-items: baseline;
+	gap: 14px;
 	cursor: pointer;
 	list-style: none; // hide native marker (Firefox)
 	user-select: none;
@@ -115,48 +119,69 @@ useHead({
 }
 .faq__q:focus-visible {
 	outline: 2px solid var(--accent);
-	outline-offset: -2px;
+	outline-offset: 4px;
 }
 
-.faq__qmark {
+.faq__prompt {
 	font-family: 'JetBrains Mono', 'Menlo-Regular', ui-monospace, monospace;
 	color: var(--accent-text);
 	font-weight: 700;
-	font-size: 15px;
+	font-size: 14px;
 	flex: none;
 }
 
 .faq__qtext {
 	margin: 0;
-	font-size: 15.5px;
+	font-size: 17px;
 	font-weight: 600;
 	color: var(--ink);
-	line-height: 1.4;
+	line-height: 1.45;
 	flex: 1;
 }
 
-.faq__chev {
+// [+] / [–] state marker, driven purely by the <details> open attribute so the
+// closed/open glyph stays correct without any JS.
+.faq__toggle {
 	flex: none;
+	font-family: 'JetBrains Mono', 'Menlo-Regular', ui-monospace, monospace;
+	font-size: 13px;
 	color: var(--ink-2);
-	font-size: 20px;
-	line-height: 1;
-	transition: transform 0.18s ease;
+	transition: color 0.15s ease;
 }
-.faq__item[open] .faq__chev {
-	transform: rotate(90deg);
+.faq__toggle::before {
+	content: '[+]';
+}
+.faq__item[open] .faq__toggle::before {
+	content: '[–]';
+}
+.faq__item[open] .faq__toggle,
+.faq__q:hover .faq__toggle {
+	color: var(--accent-text);
 }
 
 .faq__a {
-	margin: 0;
-	padding: 0 18px 18px 44px;
-	font-size: 14.5px;
-	line-height: 1.7;
+	margin: 14px 0 0 18px;
+	padding: 4px 0 4px 18px;
+	border-left: 2px solid var(--accent-muted);
+	font-size: 15px;
+	line-height: 1.75;
 	color: var(--ink-2);
-	max-width: 68ch;
+	max-width: 80ch;
+}
+
+@media (max-width: 640px) {
+	.faq__qtext {
+		font-size: 15.5px;
+	}
+	.faq__a {
+		margin-left: 10px;
+		padding-left: 14px;
+		font-size: 14.5px;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.faq__chev {
+	.faq__toggle {
 		transition: none;
 	}
 }

@@ -1,0 +1,31 @@
+# Emmanuel Francis Ramos — Frontend Engineer
+
+> Frontend engineer with 9+ years building production web applications in Vue, Nuxt, React, Next.js and TypeScript. Owns features end-to-end — from design system to shipped, real-time, on-chain interfaces — across airlines, banking, e-commerce and crypto. Open to remote freelance and full-time roles. Contact: hello@ponnex.dev (replies within 24h).
+
+## About
+- Name: Emmanuel Francis Ramos (alias "Ponnex")
+- Role: Frontend Engineer, remote
+- Experience: 9+ years shipping production web apps across 9 industries
+- Availability: open to select freelance and full-time remote work
+- Daily stack: Vue, Nuxt, TypeScript, JavaScript, SCSS, Tailwind, Pinia/Vuex
+- Also production: React, Next.js, Redux, Internet Computer, Bitcoin, Vite, Webpack, Jest, Git
+- Web3: shipped frontends on the Internet Computer and Bitcoin (canisters, wallet flows, near-instant settlement)
+
+## Key projects
+- [Singapore Airlines](https://ponnex.dev/projects/sia/): revamped the official site, migrated a legacy JS codebase to Vue + TypeScript without disrupting live booking traffic (2020)
+- [Odin.fun](https://ponnex.dev/projects/odin/): real-time trading platform on Internet Computer + Bitcoin; frontend trades directly against ICP canisters, Kafka CDC pipeline for sub-second on-chain data (2025)
+- [Bioniq](https://ponnex.dev/projects/bioniq/): fast BTC inscription marketplace, secure token bridging, near-instant finality (2023)
+- [Toniq](https://ponnex.dev/projects/toniq/): decentralized non-custodial NFT marketplace on the Internet Computer (2022)
+- [Singapore Biennale 2019](https://ponnex.dev/projects/biennale/): redesigned the website and content for the contemporary-art event (2019)
+
+## Links
+- Portfolio: https://ponnex.dev/
+- Selected work: https://ponnex.dev/projects/
+- Résumé (HTML + PDF): https://ponnex.dev/resume/
+- Résumé PDF: https://ponnex.dev/ramos_resume.pdf
+- GitHub: https://github.com/ponnex/
+- LinkedIn: https://www.linkedin.com/in/ponnex/
+
+## Contact
+- Email: hello@ponnex.dev (fastest; reply within 24 hours)
+- Or the contact form at https://ponnex.dev/#contact

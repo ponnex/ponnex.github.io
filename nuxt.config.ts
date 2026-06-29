@@ -36,6 +36,10 @@ export default defineNuxtConfig({
   sitemap: {
     exclude: ['/thankyou', '/thankyou/'],
     urls: ['/ramos_resume.pdf'],
+    // Stamp every <loc> with a <lastmod> (build time) so crawlers can prioritize
+    // re-crawls. The whole site is regenerated as one unit, so a single build
+    // date across URLs is accurate.
+    autoLastmod: true,
   },
 
   app: {
@@ -50,6 +54,7 @@ export default defineNuxtConfig({
           content:
             'Frontend engineer — Vue, Nuxt, React, Next.js, TypeScript. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
         },
+        { property: 'og:site_name', content: 'ponnex.dev' },
         { property: 'og:title', content: 'Emmanuel Francis Ramos — Frontend Engineer' },
         {
           property: 'og:description',
@@ -76,7 +81,11 @@ export default defineNuxtConfig({
         },
         { name: 'twitter:image', content: 'https://ponnex.dev/og.png' },
       ],
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        // iOS "Add to Home Screen" / Safari pinned-tab icon (icon.png is 512²).
+        { rel: 'apple-touch-icon', href: '/icon.png' },
+      ],
       script: [
         {
           // Pre-paint theme: sets the theme class on <html> before hydration so
