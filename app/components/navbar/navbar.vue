@@ -45,11 +45,11 @@
           <button
             type="button"
             class="theme-toggle"
-            :aria-label="`switch to ${theme === 'default' ? 'light' : 'dark'} theme`"
-            @click="toggleTheme()"
+            :aria-label="`theme: ${mode} — click to change`"
+            @click="cycleMode()"
           >
             <span class="theme-toggle__bracket">[</span>
-            <span class="theme-toggle__label">{{ theme === 'default' ? 'light' : 'dark' }}</span>
+            <span class="theme-toggle__label">{{ mode }}</span>
             <span class="theme-toggle__bracket">]</span>
           </button>
         </li>
@@ -60,7 +60,7 @@
 
 <script setup lang="ts">
 const route = useRoute()
-const { theme, toggleTheme } = useTheme()
+const { mode, cycleMode } = useTheme()
 
 const menuOpen = ref(false)
 const isHome = computed(() => route.path === '/')

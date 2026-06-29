@@ -83,7 +83,7 @@ export default defineNuxtConfig({
           // there is no light/dark flash and no hydration mismatch (Vue never
           // owns this class — see useTheme.ts).
           innerHTML:
-            "(function(){try{var k='ponnex-theme',s=localStorage.getItem(k),t=(s==='light'||s==='default')?s:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'default');document.documentElement.classList.add('theme--'+t)}catch(e){document.documentElement.classList.add('theme--default')}})();",
+            "(function(){try{var k='ponnex-theme',s=localStorage.getItem(k),t;if(s==='light')t='light';else if(s==='dark'||s==='default')t='default';else t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'default';document.documentElement.classList.add('theme--'+t)}catch(e){document.documentElement.classList.add('theme--default')}})();",
           tagPosition: 'head',
         },
       ],

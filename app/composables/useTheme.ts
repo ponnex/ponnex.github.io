@@ -1,16 +1,30 @@
 const STORAGE_KEY = 'ponnex-theme'
 
+// What the user picks. 'system' follows the OS and live-updates when it flips;
+// 'light' / 'dark' are explicit choices that pin the theme until changed.
+export type ThemeMode = 'system' | 'light' | 'dark'
+// What actually gets painted. 'default' is the dark theme (legacy class name —
+// the CSS classes are `theme--default` / `theme--light` and stay as-is).
 export type SiteTheme = 'default' | 'light'
 
-function resolveStored(): SiteTheme {
+// Toggle order: system -> light -> dark -> system.
+const MODE_ORDER: ThemeMode[] = ['system', 'light', 'dark']
+
+function readMode(): ThemeMode {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored === 'light' || stored === 'default') return stored
-    if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light'
+    if (stored === 'light' || stored === 'dark') return stored
+    if (stored === 'default') return 'dark' // legacy value written before tristate
   } catch {
-    /* SSR / privacy mode — fall through to default */
+    /* SSR / privacy mode — fall through */
   }
-  return 'default'
+  return 'system'
+}
+
+function resolveTheme(mode: ThemeMode, prefersDark: boolean): SiteTheme {
+  if (mode === 'light') return 'light'
+  if (mode === 'dark') return 'default'
+  return prefersDark ? 'default' : 'light' // system
 }
 
 function applyTheme(theme: SiteTheme) {
@@ -22,29 +36,47 @@ function applyTheme(theme: SiteTheme) {
 // The site is statically prerendered (ssr: true). The theme class lives on
 // <html> and is painted before hydration by the inline script in nuxt.config,
 // so there is no flash and no hydration mismatch (Vue never renders the class).
-// On the server `theme` is always 'default'; onMounted reconciles it to the
-// stored/system value, which only updates the toggle's own label.
+// On the server `mode` is always 'system'; onMounted reconciles it to the
+// stored value, and in system mode `prefersDark` keeps it following the OS live.
 export function useTheme() {
+  const mode = useState<ThemeMode>('theme-mode', () => 'system')
   const theme = useState<SiteTheme>('site-theme', () => 'default')
+  const prefersDark = usePreferredDark()
+
+  function reconcile() {
+    const resolved = resolveTheme(mode.value, prefersDark.value)
+    theme.value = resolved
+    applyTheme(resolved)
+  }
 
   onMounted(() => {
-    const resolved = resolveStored()
-    if (resolved !== theme.value) theme.value = resolved
-    applyTheme(resolved)
+    mode.value = readMode()
+    reconcile()
   })
 
-  function toggleTheme() {
-    const next: SiteTheme = theme.value === 'default' ? 'light' : 'default'
-    theme.value = next
+  // Re-paint when the user changes mode, or — in system mode — when the OS
+  // theme flips. resolveTheme ignores prefersDark for explicit modes, so an OS
+  // flip is a no-op once the user has picked light/dark.
+  watch([mode, prefersDark], () => {
+    if (import.meta.client) reconcile()
+  })
+
+  function setMode(next: ThemeMode) {
     if (import.meta.client) {
       try {
-        localStorage.setItem(STORAGE_KEY, next)
+        if (next === 'system') localStorage.removeItem(STORAGE_KEY)
+        else localStorage.setItem(STORAGE_KEY, next)
       } catch {
         /* ignore persistence failures */
       }
-      applyTheme(next)
     }
+    mode.value = next // the watch reconciles `theme` + the <html> class
   }
 
-  return { theme, toggleTheme }
+  function cycleMode() {
+    const i = MODE_ORDER.indexOf(mode.value)
+    setMode(MODE_ORDER[(i + 1) % MODE_ORDER.length] ?? 'system')
+  }
+
+  return { mode, theme, setMode, cycleMode }
 }
