@@ -15,7 +15,40 @@ export interface Project {
   /** Extra detail for the /projects/[slug] case study page */
   outcome?: string;
   role?: string;
+  /**
+   * Longer-form case-study narrative (2–3 sentences) rendered as the lead on
+   * /projects/[slug]. Grounded strictly in the facts already in `description`,
+   * `role`, `outcome`, `stack`, `year` plus public context about each
+   * client/product — no invented metrics. Deepens thin case-study copy for
+   * ranking + AI citation. Review/extend with first-hand detail where you can.
+   */
+  body?: string;
 }
+
+/**
+ * Real pixel dimensions of each project's preview image (measured from the
+ * files in public/images/projects). Case-study pages set og:image to these
+ * thumbnails, so they must also emit the matching og:image:width/height —
+ * otherwise they inherit the global 1200×630 from nuxt.config and render
+ * cropped/mismatched in social + AI previews. All thumbnails are 1200 wide.
+ */
+export const projectImageDims: Record<string, { w: number; h: number }> = {
+  sia: { w: 1200, h: 671 },
+  odin: { w: 1200, h: 750 },
+  biennale: { w: 1200, h: 630 },
+  bioniq: { w: 1200, h: 750 },
+  caltex: { w: 1200, h: 745 },
+  toniq: { w: 1200, h: 750 },
+  art: { w: 1200, h: 700 },
+  pokedex: { w: 1200, h: 760 },
+  edvan: { w: 1200, h: 750 },
+  flappy: { w: 1200, h: 750 },
+  restosearch: { w: 1200, h: 760 },
+  finefoods: { w: 1200, h: 900 },
+  waterbill: { w: 1200, h: 760 },
+  rrsdas: { w: 1200, h: 432 },
+  justdrive: { w: 1200, h: 760 },
+};
 
 /** Parse category string into filter tags, e.g. "crypto / bitcoin / trading" → ["crypto", "bitcoin", "trading"] */
 export function projectTags(project: Project): string[] {
@@ -87,6 +120,8 @@ export const projects: Project[] = [
     featured: true,
     role: 'Frontend developer',
     outcome: 'Migrated legacy booking flows to Vue + TypeScript without disrupting live traffic.',
+    body:
+      'Singapore Airlines is the flag carrier of Singapore, and its website handles booking for travellers worldwide. I worked on revamping the official site — migrating a large legacy JavaScript codebase to Vue.js and TypeScript and modernizing the booking flows, all without disrupting live production traffic.',
   },
   {
     id: 'odin',
@@ -102,6 +137,8 @@ export const projects: Project[] = [
     featured: true,
     role: 'Frontend lead',
     outcome: 'Shipped real-time trading UI against on-chain canisters with sub-second market updates.',
+    body:
+      'Odin.fun is a trading and blockchain-data platform built on the Internet Computer and Bitcoin. As frontend lead I built a UI that trades directly against ICP canisters, wired to a Kafka CDC pipeline streaming real-time on-chain updates — delivering sub-second market data to traders in a React and Tailwind interface.',
   },
   {
     id: 'biennale',
@@ -117,6 +154,8 @@ export const projects: Project[] = [
     image: '/images/projects/biennale.jpg',
     featured: true,
     role: 'Frontend developer',
+    body:
+      'The Singapore Biennale is a major international contemporary-art exhibition. For the 2019 edition I redesigned the website and reworked its content, building a fast, content-rich experience with Vue, Nuxt and SCSS.',
   },
   {
     id: 'bioniq',
@@ -132,6 +171,8 @@ export const projects: Project[] = [
     featured: true,
     role: 'Frontend developer',
     outcome: 'Delivered inscription trading flows with near-instant settlement UX.',
+    body:
+      'Bioniq is a fast Bitcoin inscription marketplace. I worked on the frontend for BTC inscription trading with secure token bridging, no trade or gas fees, and near-instant finality — designing flows that make on-chain settlement feel instant, built in Vue, Tailwind and TypeScript on the Internet Computer.',
   },
   {
     id: 'caltex',
@@ -146,6 +187,8 @@ export const projects: Project[] = [
     image: '/images/projects/caltex.jpg',
     featured: true,
     role: 'Frontend developer',
+    body:
+      'Caltex is a global fuel and lubricants brand. I built and shipped new functionality for its Oil Finder tool — helping motorists find the right product for their vehicle — using JavaScript, XML and a maps integration.',
   },
   {
     id: 'toniq',
@@ -160,6 +203,8 @@ export const projects: Project[] = [
     image: '/images/projects/toniq.jpg',
     role: 'Core frontend',
     outcome: 'Launched a full NFT marketplace with wallet flows and collection management.',
+    body:
+      'Toniq is a decentralized, non-custodial marketplace for creating, storing and exchanging digital assets on the Internet Computer. As core frontend I helped launch the full NFT marketplace — wallet connection, collection management and asset trading — using Vue, Nuxt, Tailwind and TypeScript.',
   },
   {
     id: 'i2d2',
@@ -172,6 +217,8 @@ export const projects: Project[] = [
     stack: ['Vue', 'Nuxt', 'Vuex', 'REST'],
     role: 'Frontend developer',
     outcome: 'Built compliance workflows used daily by bank operations teams.',
+    body:
+      'I2D2 (Intelligent Integrity Due Diligence) is an in-house KYC / AML web application built for a bank. I developed the frontend for the compliance workflows that operations teams use daily, wiring Vuex-managed state to REST services in a Vue and Nuxt application.',
   },
   {
     id: 'palantir',
@@ -183,6 +230,8 @@ export const projects: Project[] = [
       'In-house employee portal web application built for a bank with the Nuxt.js framework.',
     stack: ['Nuxt', 'Vuex', 'REST'],
     role: 'Frontend developer',
+    body:
+      'An in-house employee portal built for a bank with the Nuxt.js framework. I implemented the frontend, connecting Vuex-managed state to REST services for day-to-day staff workflows.',
   },
   {
     id: 'hardhat',
@@ -195,6 +244,8 @@ export const projects: Project[] = [
     stack: ['Vue', 'Nuxt', 'Tailwind', 'API'],
     role: 'Full-stack frontend',
     outcome: 'Launched end-to-end marketplace from catalog browse to checkout.',
+    body:
+      'Hard Hat Asia is a marketplace for local hardware stores. I designed, built and launched the end-to-end experience — from catalog browse to checkout and delivery — using Vue, Nuxt and Tailwind.',
   },
   {
     id: 'art',
@@ -208,6 +259,8 @@ export const projects: Project[] = [
     // No live link: allrangetrucks.com currently serves an expired SSL cert.
     image: '/images/projects/art.jpg',
     role: 'Frontend developer',
+    body:
+      'All Range Trucks sells heavy trucking equipment — tractor heads, dump trucks, wing vans, mixers, trailers and more. I created and launched the website with Vue, Nuxt and SCSS.',
   },
   {
     id: 'xerkit',
@@ -219,6 +272,8 @@ export const projects: Project[] = [
       'A NativeScript app integrating with the Xerkit IoT car product — automatic ignition, climate, and lock/unlock control.',
     stack: ['NativeScript', 'Vue', 'IoT'],
     role: 'Mobile developer',
+    body:
+      'Xerkit is an IoT car product. I built a NativeScript mobile app that integrates with the hardware for automatic ignition, climate control and remote lock/unlock — pairing a Vue-based mobile UI with the device.',
   },
 
   // ── Projects I did myself ───────────────────────────────────────────────
@@ -238,6 +293,8 @@ export const projects: Project[] = [
     featured: true,
     role: 'Developer',
     outcome: 'Installable PWA with offline-friendly browsing of 800+ Pokémon.',
+    body:
+      'A Pokédex Progressive Web App powered by the PokéAPI. Built with Nuxt and Tailwind, it is installable and offline-friendly, letting you browse 800+ Pokémon directly from the browser.',
   },
   {
     id: 'edvan',
@@ -253,6 +310,8 @@ export const projects: Project[] = [
     image: '/images/projects/edvan.jpg',
     featured: true,
     role: 'Developer',
+    body:
+      'A tailor-made digital wedding invitation site I built for a couple to share their day online — a small, polished single-purpose site crafted in Vue, Nuxt and SCSS.',
   },
   {
     id: 'flappy',
@@ -269,6 +328,8 @@ export const projects: Project[] = [
     featured: true,
     role: 'Developer',
     outcome: 'Demoed at GDG DevFest \'17 — offline-first game installable from the browser.',
+    body:
+      'A Flappy Bird clone built as a Progressive Web App to demonstrate offline play and installability, rendered on Canvas in vanilla JavaScript. First shown at GDG DevFest \'17.',
   },
   {
     id: 'restosearch',
@@ -284,6 +345,8 @@ export const projects: Project[] = [
     image: '/images/projects/restosearch.jpg',
     featured: true,
     role: 'Developer',
+    body:
+      'A food-delivery Android app I built back in 2015, in the spirit of DoorDash, Uber Eats and Foodpanda — browse restaurants, place orders and track delivery, built natively in Java.',
   },
   {
     id: 'finefoods',
@@ -299,6 +362,8 @@ export const projects: Project[] = [
     link: 'https://github.com/ponnex/ponnexs-fine-foods',
     image: '/images/projects/finefoods.jpg',
     role: 'Developer',
+    body:
+      'A Nuxt + TypeScript single-page web app for a fine-foods concept, designed from a Dribbble shot — a focused exercise in layout, motion and the kind of polish most builds skip.',
   },
   {
     id: 'waterbill',
@@ -314,6 +379,8 @@ export const projects: Project[] = [
     image: '/images/projects/waterbill.jpg',
     featured: true,
     role: 'Developer',
+    body:
+      'An Android companion app for an IoT device that tracks and measures household water consumption and billing — pairing a native Java mobile UI with live sensor data.',
   },
   {
     id: 'rrsdas',
@@ -328,6 +395,8 @@ export const projects: Project[] = [
     link: 'https://github.com/ponnex/Remote-Rain-and-Stream-Data-Acquisition-System-Progressive-Web-App',
     image: '/images/projects/rrsdas.jpg',
     role: 'Developer',
+    body:
+      'A Progressive Web App for remote rain and stream monitoring — an early-warning system for flash floods and micro-hydro site surveys, fed by SMS-relayed sensor data from Raspberry Pi hardware.',
   },
   {
     id: 'justdrive',
@@ -342,6 +411,8 @@ export const projects: Project[] = [
     link: 'https://github.com/ponnex/Just-Drive',
     image: '/images/projects/justdrive.jpg',
     role: 'Developer',
+    body:
+      'An Android app that curbs distracted driving on the principle that "no text, tweet, or email is worth your life — put the phone down and just drive." A safety-focused concept built natively in Java.',
   },
   {
     id: 'snapforus',
@@ -354,5 +425,7 @@ export const projects: Project[] = [
       'A QR-based event photo-sharing app — guests scan a code to join an event and share moments to a shared gallery.',
     stack: ['React', 'Tailwind', 'QR'],
     role: 'Developer',
+    body:
+      'A QR-based event photo-sharing app — guests scan a code to join an event and share moments to a shared gallery. Built with React and Tailwind.',
   },
 ];

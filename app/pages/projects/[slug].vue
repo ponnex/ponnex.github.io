@@ -23,7 +23,7 @@
 		<div class="case-study__grid">
 			<div class="case-study__panel">
 				<h2 class="case-study__label"># overview</h2>
-				<p>{{ project.description }}</p>
+				<p>{{ project.body || project.description }}</p>
 			</div>
 			<div v-if="project.role" class="case-study__panel">
 				<h2 class="case-study__label"># role</h2>
@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { getProjectById, projectThumbHue } from '~/data/projects'
+import { getProjectById, projectThumbHue, projectTags, projectImageDims } from '~/data/projects'
 
 const route = useRoute()
 const project = computed(() => getProjectById(String(route.params.slug)))
@@ -80,6 +80,15 @@ const initials = computed(() => {
 // Canonical + og:url come from app.vue (per-route, trailing-slash form).
 const SITE = 'https://ponnex.dev'
 
+// og:image is set per-project below, but og:image:width/height are declared
+// globally as 1200×630 in nuxt.config. Project thumbnails are 1200-wide with
+// varying heights, so emit each one's real dimensions here — otherwise the
+// inherited 630 makes previews crop/letterbox wrong. Falls back to og.png's
+// 1200×630 for projects without a thumbnail.
+const ogDims = computed(
+	() => projectImageDims[String(route.params.slug)] ?? { w: 1200, h: 630 },
+)
+
 // Per-project meta: a crawler/recruiter landing on a case-study URL gets a
 // title, summary and preview describing that specific project — not the
 // homepage defaults.
@@ -90,14 +99,75 @@ useSeoMeta({
 			: 'Project — Emmanuel Francis Ramos',
 	description: () =>
 		project.value
-			? `${project.value.role ? project.value.role + ' · ' : ''}${project.value.description}`
+			? `${project.value.role ? project.value.role + ' · ' : ''}${project.value.body || project.value.description}`
 			: 'Frontend engineering case study by Emmanuel Francis Ramos.',
 	ogTitle: () =>
 		project.value
 			? `${project.value.title} — Emmanuel Francis Ramos`
 			: 'Project — Emmanuel Francis Ramos',
-	ogDescription: () => project.value?.description ?? '',
+	ogDescription: () => project.value?.body || project.value?.description || '',
 	ogImage: () =>
 		project.value?.image ? `${SITE}${project.value.image}` : `${SITE}/og.png`,
+	ogImageWidth: () => ogDims.value.w,
+	ogImageHeight: () => ogDims.value.h,
+})
+
+// Per-project structured data. BreadcrumbList gives search engines the
+// Home › Projects › <project> trail; the CreativeWork (or SoftwareSourceCode
+// for repo links) describes the work itself and links its `creator`/`author`
+// back to the site's Person entity (@id defined in app/pages/index.vue), so AI
+// search reads each case study as a thing this specific person built.
+const projectLd = computed(() => {
+	const p = project.value
+	if (!p) return null
+	const url = `${SITE}/projects/${p.id}/`
+	const img = p.image ? `${SITE}${p.image}` : `${SITE}/og.png`
+	const tags = projectTags(p)
+	const work = {
+		'@type': isRepo.value ? 'SoftwareSourceCode' : 'CreativeWork',
+		'@id': `${url}#project`,
+		name: p.title,
+		headline: p.title,
+		description: p.body || p.description,
+		url,
+		image: img,
+		inLanguage: 'en',
+		dateCreated: p.year,
+		datePublished: p.year,
+		creator: { '@id': `${SITE}/#person` },
+		author: { '@id': `${SITE}/#person` },
+		about: tags,
+		keywords: [...p.stack, ...tags].join(', '),
+		isPartOf: { '@id': `${SITE}/#website` },
+		...(isRepo.value
+			? { codeRepository: p.link, programmingLanguage: p.stack }
+			: p.link
+				? { sameAs: p.link }
+				: {}),
+	}
+	return {
+		'@context': 'https://schema.org',
+		'@graph': [
+			{
+				'@type': 'BreadcrumbList',
+				itemListElement: [
+					{ '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+					{ '@type': 'ListItem', position: 2, name: 'Projects', item: `${SITE}/projects/` },
+					{ '@type': 'ListItem', position: 3, name: p.title, item: url },
+				],
+			},
+			work,
+		],
+	}
+})
+
+useHead({
+	script: [
+		{
+			type: 'application/ld+json',
+			// Getter so it re-serializes for the right project on client-side nav.
+			innerHTML: () => JSON.stringify(projectLd.value ?? {}),
+		},
+	],
 })
 </script>

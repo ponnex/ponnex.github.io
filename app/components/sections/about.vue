@@ -8,7 +8,7 @@
 		<div class="about">
 			<div class="about__blk">
 				<h3># background</h3>
-				<p>Frontend developer with <b>{{ yearsExperience }}+ years</b> turning complex requirements into interfaces that feel effortless. I own features end-to-end — from discovery to design system to ship.</p>
+				<p>Frontend engineer with <b>{{ yearsExperience }}+ years</b> turning complex requirements into interfaces that feel effortless. I own features end-to-end — from discovery to design system to ship.</p>
 			</div>
 			<div class="about__blk">
 				<h3># now</h3>

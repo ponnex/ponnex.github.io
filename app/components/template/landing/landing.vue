@@ -49,7 +49,7 @@ const years = computed(() => new Date().getFullYear() - CAREER_START_YEAR)
 const codeLines = computed<Tok[][]>(() => [
 	[{ t: 'const ', c: 'k' }, { t: 'dev' }, { t: ' = {' }],
 	[{ t: '  name: ' }, { t: '"Emmanuel Francis Ramos"', c: 's' }, { t: ',' }],
-	[{ t: '  role: ' }, { t: '"Frontend Developer"', c: 's' }, { t: ',' }],
+	[{ t: '  role: ' }, { t: '"Frontend Engineer"', c: 's' }, { t: ',' }],
 	[{ t: '  stack: [' }, { t: '"React"', c: 's' }, { t: ', ' }, { t: '"Vue"', c: 's' }, { t: ', ' }, { t: '"TS"', c: 's' }, { t: '],' }],
 	[{ t: '  experience: ' }, { t: `"${years.value} yrs"`, c: 'a' }, { t: ',' }],
 	[{ t: '  industries: ' }, { t: '9', c: 'a' }, { t: ',' }],
