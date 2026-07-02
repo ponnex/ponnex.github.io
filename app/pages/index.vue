@@ -1,9 +1,10 @@
 <template>
 	<div class="portfolio">
 		<LandingTemplate />
+		<StatsSection />
 		<AboutSection />
-		<WorkSection group="professional" heading="client_work" featured-only show-more />
-		<WorkSection section-id="work-personal" group="personal" heading="solo_work" featured-only show-more />
+		<WorkSection group="professional" heading="Client work" featured-only show-more />
+		<WorkSection section-id="work-personal" group="personal" heading="Solo work" featured-only show-more />
 		<SkillsSection />
 		<FaqSection />
 		<ContactSection />
@@ -12,6 +13,7 @@
 
 <script setup lang="ts">
 import LandingTemplate from '~/components/template/landing/landing.vue'
+import StatsSection from '~/components/sections/stats.vue'
 import WorkSection from '~/components/sections/work.vue'
 import SkillsSection from '~/components/sections/skills.vue'
 import AboutSection from '~/components/sections/about.vue'
@@ -83,6 +85,7 @@ const personLd = {
         'https://www.linkedin.com/in/ponnex/',
         'https://github.com/ponnex/',
         'https://www.instagram.com/ponnnnex/',
+        'https://buymeacoffee.com/ponnex',
       ],
     },
     {

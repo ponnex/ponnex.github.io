@@ -7,7 +7,7 @@
       same project/skill data the rest of the site uses, so it never drifts.
     -->
     <article class="resume__doc">
-      <p class="resume__kicker"><span class="c-accent">$</span> cat resume.md</p>
+      <p class="resume__kicker">résumé</p>
       <h1 class="resume__name">Emmanuel Francis Ramos</h1>
       <p class="resume__role">Frontend Engineer · Remote · Open to work</p>
       <p class="resume__summary">
@@ -19,12 +19,12 @@
       </p>
 
       <section class="resume__block">
-        <h2 class="resume__h"># skills</h2>
+        <h2 class="resume__h">Skills</h2>
         <p class="resume__skills">{{ skills }}</p>
       </section>
 
       <section class="resume__block">
-        <h2 class="resume__h"># experience</h2>
+        <h2 class="resume__h">Experience</h2>
         <ul class="resume__xp">
           <li v-for="p in experience" :key="p.id" class="resume__xp-item">
             <div class="resume__xp-head">
@@ -152,19 +152,24 @@ onMounted(() => {
 // Scoped to the readable résumé block; uses the same theme tokens as the rest
 // of the terminal UI so it tracks light/dark and the accent colour.
 .resume__doc {
-  // Matches $mono in _terminal.scss (SCSS vars aren't in scope here).
-  font-family: 'JetBrains Mono', 'Menlo-Regular', ui-monospace, monospace;
+  // Matches $body in _editorial.scss (SCSS vars aren't in scope here).
+  font-family: 'Archivo', 'Archivo-fallback', 'Space Grotesk', sans-serif;
   max-width: 760px;
   margin-bottom: 40px;
 }
 .resume__kicker {
-  font-size: 13px;
+  font-family: 'JetBrains Mono', 'Menlo-Regular', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--ink-2);
   margin: 0 0 10px;
 }
 .resume__name {
-  font-size: clamp(28px, 6vw, 44px);
-  line-height: 1.05;
+  font-size: clamp(34px, 6vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
   margin: 0;
   color: var(--ink);
 }
@@ -184,10 +189,13 @@ onMounted(() => {
   margin-top: 30px;
 }
 .resume__h {
-  font-size: 14px;
+  font-family: 'JetBrains Mono', 'Menlo-Regular', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--ink-2);
   margin: 0 0 12px;
-  font-weight: 700;
+  font-weight: 500;
 }
 .resume__skills {
   font-size: 14px;

@@ -38,9 +38,6 @@
           </li>
         </template>
 
-        <li class="tnav__status" role="presentation">
-          <span class="tnav__dot"></span>open to work
-        </li>
         <li role="presentation">
           <button
             type="button"

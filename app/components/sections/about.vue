@@ -1,7 +1,7 @@
 <template>
 	<section id="about" class="sec shell">
 		<h2 class="sec-head">
-			<span class="h">//</span> about
+			<span class="h">//</span> About
 			<span class="rule"></span>
 			<span>readme.md</span>
 		</h2>
@@ -17,7 +17,7 @@
 		</div>
 
 		<h2 id="services" class="sec-head sec-head--offset">
-			<span class="h">//</span> services
+			<span class="h">//</span> Services
 			<span class="rule"></span>
 			<span>what i offer</span>
 		</h2>

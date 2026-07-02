@@ -26,11 +26,11 @@
 
 		<div class="case-study__grid">
 			<div class="case-study__panel">
-				<h2 class="case-study__label"># overview</h2>
+				<h2 class="case-study__label">Overview</h2>
 				<p>{{ project.body || project.description }}</p>
 			</div>
 			<div v-if="project.outcome" class="case-study__panel">
-				<h2 class="case-study__label"># outcome</h2>
+				<h2 class="case-study__label">Outcome</h2>
 				<p>{{ project.outcome }}</p>
 			</div>
 			<!--
@@ -40,7 +40,7 @@
 				aren't repeated twice.
 			-->
 			<div class="case-study__panel">
-				<h2 class="case-study__label"># facts</h2>
+				<h2 class="case-study__label">Facts</h2>
 				<table class="case-study__facts">
 					<tbody>
 						<tr v-if="project.role">

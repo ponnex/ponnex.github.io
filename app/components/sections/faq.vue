@@ -1,7 +1,7 @@
 <template>
 	<section id="faq" class="sec shell">
 		<h2 class="sec-head">
-			<span class="h">//</span> faq
+			<span class="h">//</span> FAQ
 			<span class="rule"></span>
 			<span>frequently asked</span>
 		</h2>
@@ -122,12 +122,9 @@ useHead({
 	outline-offset: 4px;
 }
 
+// terminal "?_" prompt retired in the editorial system
 .faq__prompt {
-	font-family: 'JetBrains Mono', 'Menlo-Regular', ui-monospace, monospace;
-	color: var(--accent-text);
-	font-weight: 700;
-	font-size: 14px;
-	flex: none;
+	display: none;
 }
 
 .faq__qtext {
@@ -139,20 +136,27 @@ useHead({
 	flex: 1;
 }
 
-// [+] / [–] state marker, driven purely by the <details> open attribute so the
+// +/− state marker, driven purely by the <details> open attribute so the
 // closed/open glyph stays correct without any JS.
 .faq__toggle {
 	flex: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border: 1px solid var(--line);
+	border-radius: 50%;
 	font-family: 'JetBrains Mono', 'Menlo-Regular', ui-monospace, monospace;
-	font-size: 13px;
+	font-size: 14px;
 	color: var(--ink-2);
-	transition: color 0.15s ease;
+	transition: color 0.15s ease, border-color 0.15s ease;
 }
 .faq__toggle::before {
-	content: '[+]';
+	content: '+';
 }
 .faq__item[open] .faq__toggle::before {
-	content: '[–]';
+	content: '−';
 }
 .faq__item[open] .faq__toggle,
 .faq__q:hover .faq__toggle {
@@ -160,9 +164,9 @@ useHead({
 }
 
 .faq__a {
-	margin: 14px 0 0 18px;
+	margin: 14px 0 0 0;
 	padding: 4px 0 4px 18px;
-	border-left: 2px solid var(--accent-muted);
+	border-left: 2px solid var(--accent);
 	font-size: 15px;
 	line-height: 1.75;
 	color: var(--ink-2);

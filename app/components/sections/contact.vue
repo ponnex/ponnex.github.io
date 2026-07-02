@@ -2,10 +2,7 @@
   <section id="contact" class="sec shell">
     <div class="cta">
       <h2>Ship something together?</h2>
-      <div class="cta__prompt">
-        <span class="c-dim">$</span> contact --now
-        <span class="c-dim"># reply within 24h</span>
-      </div>
+      <div class="cta__prompt">reply within 24h — remote, worldwide</div>
       <div class="cta__email">
         <a class="cta__address" :href="`mailto:${email}`">{{ email }}</a>
         <button

@@ -1,7 +1,7 @@
 <template>
 	<section id="skills" ref="sectionEl" class="sec shell">
 		<h2 class="sec-head">
-			<span class="h">//</span> skills
+			<span class="h">//</span> Skills
 			<span class="rule"></span>
 			<span>tools in production</span>
 		</h2>

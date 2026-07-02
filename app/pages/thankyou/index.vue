@@ -1,16 +1,8 @@
 <template>
   <div class="ty">
     <div class="ty__card">
-      <div class="ty__bar" aria-hidden="true">
-        <i style="background: #ff5f56"></i><i style="background: #ffbd2e"></i><i
-          style="background: #27c93f"
-        ></i>
-        <span class="fn">message.txt</span>
-      </div>
       <div class="ty__body">
-        <pre class="ty__log"><span class="c-accent">$</span> ./send-message.sh
-<span class="ty__ok">✓ message sent</span>
-<span class="c-dim"># reply within 24h — check your inbox</span></pre>
+        <p class="ty__status"><span class="ty__ok">✓</span> message sent — reply within 24h</p>
 
         <h1 class="ty__title">Thanks — talk soon.</h1>
         <p class="ty__sub">Your message is on its way. In the meantime:</p>
