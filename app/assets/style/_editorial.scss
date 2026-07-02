@@ -164,13 +164,15 @@ body {
 
 // ---- sections -----------------------------------------------------
 .sec {
-  padding: 96px 0;
+  // padding-block only — horizontal padding belongs to .shell (both classes
+  // sit on the same element; a padding shorthand here would erase it).
+  padding-block: 96px;
   // Snap anchor (FR-006); --nav-h defined on .tnav ancestor scope below.
   scroll-snap-align: start;
   scroll-margin-top: var(--nav-h, 72px);
 
   @media (max-width: 768px) {
-    padding: 64px 0;
+    padding-block: 64px;
   }
 }
 
@@ -371,7 +373,7 @@ body {
 // ---- hero ---------------------------------------------------------
 .hero {
   position: relative;
-  padding: 56px 0 0;
+  padding-block: 56px 0;
   scroll-snap-align: start;
   scroll-margin-top: var(--nav-h, 72px);
 
@@ -1280,7 +1282,7 @@ html.js {
 
 // ---- page intro (projects / resume headers) ------------------------
 .page-head {
-  padding: 84px 0 40px;
+  padding-block: 84px 40px;
 
   &__tag {
     font-family: $mono;
