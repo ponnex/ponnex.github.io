@@ -18,6 +18,21 @@
 				</div>
 			</div>
 
+			<!--
+				Portrait (FR-003): b/w cut-out (Vision-masked, transparent) sized to
+				the slot's aspect ratio so it causes no layout shift. --filled drops
+				the dashed placeholder frame.
+			-->
+			<div class="hero__portrait hero__portrait--filled">
+				<img
+					src="/portrait.webp"
+					alt="Portrait of Emmanuel Francis Ramos"
+					width="760"
+					height="920"
+					fetchpriority="high"
+				/>
+			</div>
+
 			<div class="hero__rail">
 				<SocialIcons />
 			</div>
