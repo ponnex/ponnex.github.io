@@ -19,12 +19,18 @@
 			</div>
 
 			<!--
-				Portrait slot (FR-003): transparent with dashed frame until the real
-				b/w cut-out arrives. Drop a <picture>/<img> inside .hero__portrait —
-				the frame owns the aspect ratio, so the swap causes no layout shift.
+				Portrait (FR-003): b/w cut-out (Vision-masked, transparent) sized to
+				the slot's aspect ratio so it causes no layout shift. --filled drops
+				the dashed placeholder frame.
 			-->
-			<div class="hero__portrait" aria-hidden="true">
-				<span class="hero__portrait-tag">portrait</span>
+			<div class="hero__portrait hero__portrait--filled">
+				<img
+					src="/portrait.webp"
+					alt="Portrait of Emmanuel Francis Ramos"
+					width="760"
+					height="920"
+					fetchpriority="high"
+				/>
 			</div>
 
 			<div class="hero__rail">

@@ -489,6 +489,11 @@ body {
       object-position: top center;
     }
 
+    // real cut-out in place — placeholder frame retires (FR-003)
+    &--filled {
+      border: 0;
+    }
+
     @media (max-width: 640px) {
       order: 1;
       max-width: 300px;
