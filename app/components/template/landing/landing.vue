@@ -1,14 +1,11 @@
 <template>
 	<section class="hero shell">
 		<!--
-			The visible headline is the short display form; the full name stays in
-			the h1 for crawlers/AT via the sr-only span (FR-008 — SEO guard). The
-			display spans are aria-hidden so screen readers never read "FRANCIS
-			RAMOS" twice.
+			The headline IS the full name, so the h1 is real text (uppercased in
+			CSS) — no sr-only mirror needed for crawlers/AT (FR-008).
 		-->
 		<h1 class="hero__headline">
-			<span class="sr-only">Emmanuel Francis Ramos — Frontend Engineer</span>
-			<span aria-hidden="true"><span class="hero__word--outline">Francis</span> Ramos</span>
+			<span class="hero__word--outline">Emmanuel Francis</span> Ramos
 		</h1>
 
 		<div class="hero__grid">
