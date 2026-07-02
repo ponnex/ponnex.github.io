@@ -64,3 +64,15 @@ pokedex, edvan, flappy, restosearch, finefoods, waterbill, rrsdas, justdrive, sn
 Auto-maintained — adding a project to `app/data/projects.ts` (and linking it from
 `/projects/`, which the index already does) adds it to the sitemap on the next
 build. No manual editing needed. Re-run `npm run generate` to regenerate.
+
+## 2026-07-02 — Swiss Editorial redesign
+
+Terminal/engineer theme replaced by the Swiss Editorial system (spec/plan/tasks
+in docs/). Single design-token source: `app/assets/style/_editorial.scss`
+(light `.theme--light` paper / dark `.theme--default` ink). Display font:
+self-hosted variable Archivo (`public/fonts/Archivo.woff2`, preloaded).
+Hero: outline FRANCIS + solid RAMOS (full name kept in h1 via sr-only span);
+portrait slot is a dashed placeholder awaiting the real image — drop a
+<picture> inside `.hero__portrait` in landing.vue. Scroll: CSS proximity snap
+per section (`--nav-h` offset). Reveals are JS-gated under `html.js` so
+prerendered HTML stays fully visible for crawlers/no-JS.
