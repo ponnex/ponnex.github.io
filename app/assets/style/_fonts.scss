@@ -2,6 +2,29 @@
 // fallback. Legacy eot/otf/ttf/svg sources were dropped during the Nuxt 4
 // migration.
 
+/* Display + body for the Swiss Editorial design (self-hosted, variable:
+   weight 100-900 + width 62-125%). Latin subset only — ~88KB. */
+@font-face {
+  font-family: 'Archivo';
+  // Served from public/ (stable URL) so the preload in nuxt.config.ts and
+  // this face always point at the same file — hashed asset URLs can't drift.
+  src: url('/fonts/Archivo.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Metric-compatible fallback so the giant hero headline doesn't jump when
+   Archivo swaps in (CLS guard — docs/plan.md risk 5). */
+@font-face {
+  font-family: 'Archivo-fallback';
+  src: local('Helvetica Neue'), local('Arial');
+  size-adjust: 98%;
+  ascent-override: 90%;
+  descent-override: 22%;
+}
+
 /* Display + mono for the terminal/engineer design (self-hosted, variable). */
 @font-face {
   font-family: 'Space Grotesk';

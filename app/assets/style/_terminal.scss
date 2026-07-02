@@ -395,7 +395,7 @@ button:focus-visible,
     display: grid;
     grid-template-columns: 1.25fr 1fr;
     gap: 50px;
-    align-items: start;
+    align-items: stretch;
     margin-top: 34px;
     @media (min-width: ($screen-md-max + 1)) {
       .hero__code {
@@ -412,6 +412,18 @@ button:focus-visible,
       }
     }
   }
+  &__lead {
+    display: flex;
+    flex-direction: column;
+    // On desktop the two columns are side by side: push actions + social to the
+    // bottom so they align with the base of the code block. On mobile (stacked)
+    // keep the normal 22px gap.
+    @media (min-width: ($screen-md-max + 1)) {
+      .hero__actions {
+        margin-top: auto;
+      }
+    }
+  }
   &__blurb {
     font-family: $grot;
     font-size: 19px;
@@ -423,8 +435,26 @@ button:focus-visible,
       font-weight: 600;
     }
   }
+  &__typer {
+    margin-top: 20px;
+    font-family: $mono;
+    font-size: 14px;
+    color: var(--ink-2);
+    min-height: 1.4em; // reserve height so CTA doesn't jump as text changes
+    line-height: 1.4;
+    @media (max-width: $screen-sm-max) {
+      font-size: 13px;
+    }
+    &-text {
+      color: var(--ink);
+    }
+    &-cursor {
+      color: var(--accent-text);
+      animation: code-blink 1s step-end infinite;
+    }
+  }
   &__actions {
-    margin-top: 26px;
+    margin-top: 22px;
     display: flex;
     gap: 14px;
     flex-wrap: wrap;

@@ -85,14 +85,26 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         // iOS "Add to Home Screen" / Safari pinned-tab icon (icon.png is 512²).
         { rel: 'apple-touch-icon', href: '/icon.png' },
+        // The hero headline renders in Archivo at viewport scale — fetch it
+        // first so the swap happens before first paint (CLS guard).
+        {
+          rel: 'preload',
+          as: 'font',
+          type: 'font/woff2',
+          href: '/fonts/Archivo.woff2',
+          crossorigin: '',
+        },
       ],
       script: [
         {
           // Pre-paint theme: sets the theme class on <html> before hydration so
           // there is no light/dark flash and no hydration mismatch (Vue never
           // owns this class — see useTheme.ts).
+          // Also stamps html.js: scroll-reveal "hidden until revealed" styles
+          // are scoped under html.js, so prerendered HTML (crawlers, no-JS)
+          // always renders fully visible content (docs/plan.md risk 4).
           innerHTML:
-            "(function(){try{var k='ponnex-theme',s=localStorage.getItem(k),t;if(s==='light')t='light';else if(s==='dark'||s==='default')t='default';else t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'default';document.documentElement.classList.add('theme--'+t)}catch(e){document.documentElement.classList.add('theme--default')}})();",
+            "(function(){try{document.documentElement.classList.add('js');var k='ponnex-theme',s=localStorage.getItem(k),t;if(s==='light')t='light';else if(s==='dark'||s==='default')t='default';else t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'default';document.documentElement.classList.add('theme--'+t)}catch(e){document.documentElement.classList.add('theme--default')}})();",
           tagPosition: 'head',
         },
       ],
