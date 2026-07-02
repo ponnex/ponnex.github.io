@@ -52,7 +52,8 @@ $maxw: 1240px;
   --accent-ink: #141417;
   --green: #5ad07a;
   --bar-track: #2c2c33;
-  --cta-bg: #f4f3f0; // banner inverts: paper slab on ink
+  --cta-bg: #fdc435; // banner is the accent-yellow slab on ink
+  --headline-stroke: #fdc435; // outline headline words stroke gold on ink
   --chip: #f4f3f0;
   --chip-ink: #141417;
   --stroke-w: 1.5px;
@@ -201,13 +202,13 @@ body {
     transform: translateY(-6px);
   }
 
-  // right-hand meta label
+  // right-hand meta label — accent gold, per-theme shade (AA on paper)
   > span:last-child {
     font-family: $mono;
     font-size: 12.5px;
     font-weight: 400;
     letter-spacing: 0.02em;
-    color: var(--ink-2);
+    color: var(--accent-text);
     white-space: nowrap;
   }
 
@@ -385,8 +386,9 @@ body {
     text-align: center;
     font-family: $disp;
     // Sized so the full three-word name holds one line down to ~900px,
-    // then wraps to two centred lines on smaller viewports.
-    font-size: clamp(44px, 7.2vw, 104px);
+    // then wraps to two centred lines on smaller viewports. 110px is the
+    // measured max that still fits the 1144px shell at this stretch.
+    font-size: clamp(48px, 7.9vw, 110px);
     line-height: 0.92;
     font-weight: 800;
     letter-spacing: -0.025em;
@@ -403,7 +405,7 @@ body {
 
   &__word--outline {
     color: transparent;
-    -webkit-text-stroke: var(--stroke-w) var(--ink);
+    -webkit-text-stroke: var(--stroke-w) var(--headline-stroke, var(--ink));
   }
 
   &__grid {
@@ -912,7 +914,9 @@ html.js {
     color: var(--ink-2);
     white-space: nowrap;
 
-    &--daily {
+    // class suffix comes from the data's context key (skillgrp__tag--<context>)
+    &--daily_driver,
+    &--production_ready {
       color: var(--accent-text);
     }
   }
@@ -1082,6 +1086,23 @@ html.js {
   .btn--ghost {
     border-color: color-mix(in srgb, currentColor 30%, transparent);
     color: inherit;
+  }
+}
+
+// Dark mode: the slab is accent yellow, so accent-on-accent elements switch
+// to ink for contrast (banner text is already var(--bg) = ink).
+.theme--default .cta {
+  .btn--primary {
+    background: var(--accent-ink);
+    color: #f4f3f0;
+  }
+
+  &__address {
+    text-decoration-color: currentColor;
+  }
+
+  .theme-toggle__bracket {
+    color: currentColor;
   }
 }
 
