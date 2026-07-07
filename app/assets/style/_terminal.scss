@@ -26,25 +26,23 @@ $maxw: 1160px;
   --accent-ink: #141417; // text placed on top of accent fills
   --green: #7ee08a;
   --bar-track: #2c2c33;
-  --cta-bg: rgba(253, 196, 53, 0.05);
 }
 
 .theme--light {
-  // Blueprint mode — cyan line accents on draft paper
-  --bg: #e8eef5;
-  --panel: #f7fafc;
-  --panel-2: #edf2f7;
-  --ink: #0f172a;
-  --ink-2: #475569;
-  --line: rgba(8, 145, 178, 0.18);
-  --grid: rgba(8, 145, 178, 0.07);
-  --accent: #0891b2;
-  --accent-text: #0e7490;
-  --accent-muted: #6b94a3;
-  --accent-ink: #f0fdfa;
-  --green: #059669;
-  --bar-track: #cbd5e1;
-  --cta-bg: #0891b2;
+  // Monochrome mode — black ink on paper, no color accents
+  --bg: #f4f4f5;
+  --panel: #ffffff;
+  --panel-2: #ececef;
+  --ink: #141417;
+  --ink-2: #5b5b63;
+  --line: rgba(20, 20, 23, 0.12);
+  --grid: rgba(20, 20, 23, 0.05);
+  --accent: #141417; // fills/buttons — black, white text on top
+  --accent-text: #141417;
+  --accent-muted: #6e6e76; // AA on white panels (h3 marks, /01 numerals)
+  --accent-ink: #ffffff;
+  --green: #141417;
+  --bar-track: #d9d9de;
 }
 
 // ---- page shell (override legacy .base chrome) --------------------
@@ -77,14 +75,6 @@ body {
     color 0.35s ease;
 }
 
-// The theme--* class lives on <html>; the visible backdrop is the .theme
-// wrapper, so the light-mode radial overlay must target the wrapper, not :root.
-.theme--light .theme {
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-    radial-gradient(circle at 50% 0%, rgba(8, 145, 178, 0.08), transparent 55%);
-}
 
 // skip link
 .skip-link {
@@ -173,10 +163,7 @@ button:focus-visible,
   // vertical only — horizontal padding comes from .shell. Using the `padding`
   // shorthand here would reset .shell's side padding to 0 and let content run
   // edge-to-edge below the max-width breakpoint (mobile/tablet).
-  padding-block: 72px;
-  @media (max-width: $screen-sm-max) {
-    padding-block: 48px;
-  }
+  padding-block: 48px;
 }
 .sec-head {
   display: flex;
@@ -365,7 +352,7 @@ button:focus-visible,
 // ---- hero --------------------------------------------------------
 .hero {
   position: relative;
-  padding-block: 76px 64px;
+  padding-block: 56px 64px;
   @media (max-width: $screen-sm-max) {
     padding-block: 44px 36px;
   }
@@ -376,7 +363,7 @@ button:focus-visible,
   &__name {
     font-family: $grot;
     font-weight: 700;
-    font-size: 80px;
+    font-size: 64px;
     line-height: 0.98;
     letter-spacing: -0.03em;
     color: var(--ink);
@@ -391,24 +378,47 @@ button:focus-visible,
       font-size: 40px;
     }
   }
-  &__flex {
+  // all copy left, portrait right; on mobile the portrait slots between
+  // the name and the blurb
+  &__grid {
     display: grid;
     grid-template-columns: 1.25fr 1fr;
-    gap: 50px;
-    align-items: start;
-    margin-top: 34px;
-    @media (min-width: ($screen-md-max + 1)) {
-      .hero__code {
-        margin-top: -20px;
-        transform: translateX(12px);
-      }
-    }
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'head portrait'
+      'body portrait';
+    column-gap: 50px;
     @media (max-width: $screen-md-max) {
       grid-template-columns: 1fr;
-      gap: 30px;
-      .hero__code {
-        margin-top: 0;
-        transform: none;
+      grid-template-rows: none;
+      grid-template-areas:
+        'head'
+        'portrait'
+        'body';
+      row-gap: 26px;
+    }
+  }
+  &__head {
+    grid-area: head;
+  }
+  &__body {
+    grid-area: body;
+  }
+  // b/w transparent cut-out; subject gazes up-left toward the headline
+  &__portrait {
+    grid-area: portrait;
+    align-self: end;
+    img {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      margin-inline: auto;
+      filter: drop-shadow(0 24px 44px rgba(0, 0, 0, 0.35));
+    }
+    @media (max-width: $screen-md-max) {
+      img {
+        max-width: 280px;
       }
     }
   }
@@ -418,6 +428,11 @@ button:focus-visible,
     color: var(--ink-2);
     max-width: 46ch;
     line-height: 1.55;
+    margin-top: 26px;
+    // mobile spacing comes from the grid row-gap
+    @media (max-width: $screen-md-max) {
+      margin-top: 0;
+    }
     b {
       color: var(--ink);
       font-weight: 600;
@@ -557,6 +572,38 @@ button:focus-visible,
 @keyframes code-blink {
   50% {
     opacity: 0;
+  }
+}
+
+// ---- light theme: monochrome overrides ---------------------------
+// The b/w light theme strips every color accent: the embedded terminal
+// windows (dev card, contact form, thank-you) render in grayscale and
+// the project-card hue accents go neutral.
+.theme--light {
+  .code pre {
+    .k {
+      color: #8b8b93;
+    }
+    .a {
+      color: #e8e8ea;
+    }
+    .s {
+      color: #c8c8cc;
+    }
+  }
+  .code__cursor {
+    color: #e8e8ea;
+  }
+  .code__bar i,
+  .cform__bar i,
+  .ty__bar i {
+    filter: grayscale(1);
+  }
+  .pcard {
+    border-left-color: rgba(20, 20, 23, 0.45);
+  }
+  .pcard__media {
+    background: linear-gradient(135deg, hsl(0 0% 26%) 0%, hsl(0 0% 13%) 100%);
   }
 }
 
@@ -851,10 +898,16 @@ button:focus-visible,
 // ---- about + services -------------------------------------------
 .about {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.25fr 1fr;
   gap: 24px;
+  align-items: start;
   @media (max-width: $screen-md-max) {
     grid-template-columns: 1fr;
+  }
+  &__col {
+    display: grid;
+    gap: 24px;
+    align-content: start;
   }
   &__blk {
     background: var(--panel);
@@ -1006,14 +1059,6 @@ button:focus-visible,
     &:hover {
       border-color: var(--accent-ink);
     }
-  }
-}
-
-.theme--light .cta {
-  background: var(--accent);
-  .cta__btn {
-    background: var(--accent-ink);
-    color: var(--accent);
   }
 }
 
