@@ -432,7 +432,7 @@ button:focus-visible,
       margin-inline: auto;
       // dark theme: soft gold glow lifts the b/w cut-out off the grid
       // (light theme swaps this for a plain shadow — see monochrome overrides)
-      filter: drop-shadow(0 0 48px rgba(253, 196, 53, 0.28));
+      filter: drop-shadow(0 0 56px rgba(253, 196, 53, 0.16));
     }
     @media (max-width: $screen-md-max) {
       img {
