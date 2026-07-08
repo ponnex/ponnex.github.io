@@ -430,7 +430,9 @@ button:focus-visible,
       max-width: 400px;
       height: auto;
       margin-inline: auto;
-      filter: drop-shadow(0 24px 44px rgba(0, 0, 0, 0.35));
+      // dark theme: soft gold glow lifts the b/w cut-out off the grid
+      // (light theme swaps this for a plain shadow — see monochrome overrides)
+      filter: drop-shadow(0 0 48px rgba(253, 196, 53, 0.28));
     }
     @media (max-width: $screen-md-max) {
       img {
@@ -593,6 +595,9 @@ button:focus-visible,
   }
   .pcard__media {
     background: linear-gradient(135deg, hsl(0 0% 26%) 0%, hsl(0 0% 13%) 100%);
+  }
+  .hero__portrait img {
+    filter: drop-shadow(0 24px 44px rgba(20, 20, 23, 0.25));
   }
 }
 
