@@ -25,10 +25,6 @@
 				</div>
 			</div>
 		</div>
-		<a href="#work" class="hero__scroll" aria-label="Scroll to work section">
-			<span class="hero__scroll-label">scroll</span>
-			<span class="hero__scroll-arrow" aria-hidden="true">↓</span>
-		</a>
 	</section>
 </template>
 
