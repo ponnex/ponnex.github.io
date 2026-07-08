@@ -104,14 +104,7 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       // Pre-bundle deps Vite discovers at runtime to avoid mid-dev page reloads.
-      // `mobile-detect` is CJS; both are pulled in by app/plugins/util.ts.
-      include: [
-        '@vue/devtools-core',
-        '@vue/devtools-kit',
-        'browser-detect',
-        'mobile-detect',
-        'vue-pdf-embed',
-      ],
+      include: ['@vue/devtools-core', '@vue/devtools-kit', 'vue-pdf-embed'],
     },
     css: {
       preprocessorOptions: {

@@ -24,13 +24,7 @@
     url('../fonts/CarmenSansMedium.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-}
-@font-face {
-  font-family: 'CarmenSans-SemiBold';
-  src: url('../fonts/CarmenSansSemiBold.woff2') format('woff2'),
-    url('../fonts/CarmenSansSemiBold.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'CarmenSans-Bold';
@@ -38,6 +32,7 @@
     url('../fonts/CarmenSansBold.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'CarmenSans-Heavy';
@@ -45,6 +40,7 @@
     url('../fonts/CarmenSansHeavy.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'Menlo-Regular';
@@ -52,4 +48,5 @@
     url('../fonts/Menlo-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
