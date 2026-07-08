@@ -34,14 +34,17 @@
       <!-- Outside the drawer so the toggle stays reachable in the header on
            mobile instead of hiding behind [menu]. -->
       <div class="tnav__controls">
+        <!-- Label text comes from CSS (::before keyed off the theme--* class
+             on <html>), so the prerendered HTML shows the right action from
+             the first paint — no label flip on hydration. -->
         <button
           type="button"
           class="theme-toggle"
-          :aria-label="`theme: ${themeLabel} — click to switch to ${themeLabel === 'dark' ? 'light' : 'dark'}`"
+          :aria-label="`switch to ${themeLabel} theme`"
           @click="toggleTheme()"
         >
           <span class="theme-toggle__bracket">[</span>
-          <span class="theme-toggle__label">{{ themeLabel }}</span>
+          <span class="theme-toggle__label"></span>
           <span class="theme-toggle__bracket">]</span>
         </button>
         <button
@@ -64,9 +67,10 @@
 const route = useRoute()
 const { theme, toggleTheme } = useTheme()
 
-// label shows the *resolved* theme — first-time visitors in system mode see
-// whatever the OS picked, and the first toggle pins the opposite
-const themeLabel = computed(() => (theme.value === 'light' ? 'light' : 'dark'))
+// the theme a click switches TO (action-labeled like [menu]/[copy]) — feeds
+// the aria-label only; visible text is CSS-driven off the <html> theme class
+// so it can't flash a stale value pre-hydration
+const themeLabel = computed(() => (theme.value === 'light' ? 'dark' : 'light'))
 
 const menuOpen = ref(false)
 const isHome = computed(() => route.path === '/')

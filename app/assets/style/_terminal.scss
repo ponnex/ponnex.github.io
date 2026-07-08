@@ -345,6 +345,14 @@ button:focus-visible,
     letter-spacing: 0.02em;
     line-height: 1;
     color: var(--ink-2);
+    // action label ("what a click switches to") painted from the pre-paint
+    // theme class on <html> — identical before and after hydration
+    .theme-toggle__label::before {
+      content: 'light';
+      .theme--light & {
+        content: 'dark';
+      }
+    }
     &__bracket {
       color: var(--ink-2);
     }
