@@ -269,8 +269,20 @@ async function onSubmit() {
 
   error.value = '';
   sending.value = true;
+
+  // Client-side gate: the user must clear the invisible reCAPTCHA before we
+  // POST. On the Web3Forms free plan the token can't be verified server-side
+  // (that's Pro-only), and sending recaptcha_response makes Web3Forms take the
+  // Pro captcha path and reject — so the token stays client-side only.
   try {
-    const captchaToken = await executeCaptcha();
+    await executeCaptcha();
+  } catch {
+    error.value = 'Captcha check failed — please try again.';
+    sending.value = false;
+    return;
+  }
+
+  try {
     const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {
@@ -284,18 +296,19 @@ async function onSubmit() {
         name: formData.name,
         email: formData.email,
         message: formData.message,
-        'g-recaptcha-response': captchaToken,
-        recaptcha_response: captchaToken,
       }),
     });
     const data = await res.json();
     if (data.success) {
       await navigateTo('/thankyou');
     } else {
-      throw new Error(data.message || 'submit failed');
+      // Surface Web3Forms' own reason (e.g. captcha/plan/access-key issues)
+      // instead of a generic message, so failures are debuggable.
+      error.value =
+        data.message || `Couldn't send — please email me directly at ${email}.`;
     }
   } catch {
-    error.value = `Couldn't send — please email me directly at ${email}.`;
+    error.value = `Couldn't reach the server — please email me directly at ${email}.`;
   } finally {
     sending.value = false;
   }
