@@ -82,7 +82,8 @@
           <div class="cform__row">
             <label class="cform__field">
               <span class="cform__label"
-                ><span class="c-accent">#</span> name</span
+                ><span class="c-accent">#</span> name
+                <span class="cform__req" aria-hidden="true">*</span></span
               >
               <input
                 id="cf-name"
@@ -95,7 +96,8 @@
             </label>
             <label class="cform__field">
               <span class="cform__label"
-                ><span class="c-accent">#</span> email</span
+                ><span class="c-accent">#</span> email
+                <span class="cform__req" aria-hidden="true">*</span></span
               >
               <input
                 id="cf-email"
@@ -109,7 +111,8 @@
           </div>
           <label class="cform__field">
             <span class="cform__label"
-              ><span class="c-accent">#</span> message</span
+              ><span class="c-accent">#</span> message
+              <span class="cform__req" aria-hidden="true">*</span></span
             >
             <textarea
               id="cf-message"
@@ -119,6 +122,15 @@
               :disabled="sending"
             ></textarea>
           </label>
+
+          <!-- reCAPTCHA v2 invisible mount point — the widget executes on
+               submit; Google's script loads on first modal open. -->
+          <div ref="captchaEl" class="cform__captcha"></div>
+
+          <p class="cform__note c-dim">
+            <span class="cform__req" aria-hidden="true">*</span> required
+            fields
+          </p>
 
           <p v-if="error" class="cform__error" role="alert">{{ error }}</p>
 
@@ -142,8 +154,16 @@
 // instantly), then paste it here.
 const WEB3FORMS_ACCESS_KEY = 'f24d2260-a575-405a-a9a1-9b2e55a55ec3';
 
+// Google reCAPTCHA v2 invisible — same key + size as the old Nuxt 2 site
+// (~/Documents/ponnex-portfolio, commits a128091/ed5ed28, @nuxtjs/recaptcha
+// with size:'invisible'). Executes on submit and gates it client-side; the
+// token also goes to Web3Forms as recaptcha_response (verified on their Pro
+// plan).
+const RECAPTCHA_SITEKEY = '6Le_-6sZAAAAALqOWrY7810jQZkpHec3xkj4wgt4';
+
 const email = 'hello@ponnex.dev';
 const { copied, copy } = useCopyText();
+const { theme } = useTheme();
 
 // message.txt lives in a native <dialog>: showModal() gives us the focus
 // trap, Esc-to-close and ::backdrop for free. Backdrop clicks hit the
@@ -153,6 +173,75 @@ const dialogEl = ref<HTMLDialogElement | null>(null);
 function openModal() {
   dialogEl.value?.showModal();
   document.body.classList.add('no-scroll');
+  renderCaptcha().catch(() => {
+    /* captcha unavailable (offline/blocked) — onSubmit still requires a token */
+  });
+}
+
+// ---- Google reCAPTCHA v2 invisible (script loads on first modal open) ----
+type Grecaptcha = {
+  ready: (cb: () => void) => void;
+  render: (el: HTMLElement, opts: Record<string, unknown>) => number;
+  execute: (id: number) => void;
+  reset: (id: number) => void;
+};
+const getGrecaptcha = () =>
+  (window as unknown as { grecaptcha?: Grecaptcha }).grecaptcha;
+
+const captchaEl = ref<HTMLElement | null>(null);
+let captchaWidgetId: number | null = null;
+let captchaScript: Promise<void> | null = null;
+let pendingToken: {
+  resolve: (token: string) => void;
+  reject: (err: Error) => void;
+} | null = null;
+
+function loadCaptchaScript() {
+  captchaScript ??= new Promise<void>((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://www.google.com/recaptcha/api.js?render=explicit';
+    s.async = true;
+    s.onload = () => getGrecaptcha()!.ready(resolve);
+    s.onerror = () => {
+      captchaScript = null;
+      reject(new Error('captcha script failed to load'));
+    };
+    document.head.appendChild(s);
+  });
+  return captchaScript;
+}
+
+async function renderCaptcha() {
+  await loadCaptchaScript();
+  const grecaptcha = getGrecaptcha();
+  if (!grecaptcha || !captchaEl.value || captchaWidgetId !== null) return;
+  captchaWidgetId = grecaptcha.render(captchaEl.value, {
+    sitekey: RECAPTCHA_SITEKEY,
+    size: 'invisible',
+    theme: theme.value === 'light' ? 'light' : 'dark',
+    callback: (token: string) => {
+      pendingToken?.resolve(token);
+      pendingToken = null;
+    },
+    'error-callback': () => {
+      pendingToken?.reject(new Error('captcha failed'));
+      pendingToken = null;
+    },
+  });
+}
+
+// Runs the invisible challenge and resolves with a fresh single-use token.
+// Google pops a visual challenge only when the interaction looks suspicious.
+async function executeCaptcha(): Promise<string> {
+  await renderCaptcha();
+  const grecaptcha = getGrecaptcha();
+  if (!grecaptcha || captchaWidgetId === null)
+    throw new Error('captcha unavailable');
+  grecaptcha.reset(captchaWidgetId);
+  return new Promise((resolve, reject) => {
+    pendingToken = { resolve, reject };
+    grecaptcha.execute(captchaWidgetId!);
+  });
 }
 
 function closeModal() {
@@ -181,6 +270,7 @@ async function onSubmit() {
   error.value = '';
   sending.value = true;
   try {
+    const captchaToken = await executeCaptcha();
     const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {
@@ -194,6 +284,8 @@ async function onSubmit() {
         name: formData.name,
         email: formData.email,
         message: formData.message,
+        'g-recaptcha-response': captchaToken,
+        recaptcha_response: captchaToken,
       }),
     });
     const data = await res.json();

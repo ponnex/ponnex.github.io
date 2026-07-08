@@ -1143,6 +1143,14 @@ button:focus-visible,
     font-size: 12px;
     color: var(--ink-2);
   }
+  &__req {
+    color: var(--accent-text);
+  }
+  &__note {
+    margin: 0;
+    font-family: $mono;
+    font-size: 11px;
+  }
   input,
   textarea {
     font-family: $mono;
