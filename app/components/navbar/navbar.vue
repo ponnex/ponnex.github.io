@@ -3,18 +3,6 @@
     <div class="tnav__in">
       <NuxtLink to="/" class="tnav__logo"><span class="c-accent">~/</span>ponnex</NuxtLink>
 
-      <button
-        type="button"
-        class="tnav__menu-btn"
-        :aria-expanded="menuOpen"
-        aria-controls="tnav-drawer"
-        @click="menuOpen = !menuOpen"
-      >
-        <span class="theme-toggle__bracket">[</span>
-        <span class="theme-toggle__label">{{ menuOpen ? 'close' : 'menu' }}</span>
-        <span class="theme-toggle__bracket">]</span>
-      </button>
-
       <ul class="tnav__links" :class="{ 'tnav__links--open': menuOpen }" id="tnav-drawer">
         <li :class="{ active: isRouteActive('/') }" role="presentation">
           <NuxtLink to="/" @click="closeMenu">portfolio</NuxtLink>
@@ -41,19 +29,33 @@
         <li class="tnav__status" role="presentation">
           <span class="tnav__dot"></span>open to work
         </li>
-        <li role="presentation">
-          <button
-            type="button"
-            class="theme-toggle"
-            :aria-label="`theme: ${mode} — click to change`"
-            @click="cycleMode()"
-          >
-            <span class="theme-toggle__bracket">[</span>
-            <span class="theme-toggle__label">{{ mode }}</span>
-            <span class="theme-toggle__bracket">]</span>
-          </button>
-        </li>
       </ul>
+
+      <!-- Outside the drawer so the toggle stays reachable in the header on
+           mobile instead of hiding behind [menu]. -->
+      <div class="tnav__controls">
+        <button
+          type="button"
+          class="theme-toggle"
+          :aria-label="`theme: ${mode} — click to change`"
+          @click="cycleMode()"
+        >
+          <span class="theme-toggle__bracket">[</span>
+          <span class="theme-toggle__label">{{ mode }}</span>
+          <span class="theme-toggle__bracket">]</span>
+        </button>
+        <button
+          type="button"
+          class="tnav__menu-btn"
+          :aria-expanded="menuOpen"
+          aria-controls="tnav-drawer"
+          @click="menuOpen = !menuOpen"
+        >
+          <span class="theme-toggle__bracket">[</span>
+          <span class="theme-toggle__label">{{ menuOpen ? 'close' : 'menu' }}</span>
+          <span class="theme-toggle__bracket">]</span>
+        </button>
+      </div>
     </div>
   </div>
 </template>

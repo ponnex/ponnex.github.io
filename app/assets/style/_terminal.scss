@@ -226,6 +226,8 @@ button:focus-visible,
     gap: 26px;
     list-style: none;
     white-space: nowrap;
+    // pushes links (and the controls cluster after them) to the right edge
+    margin-left: auto;
     li > a {
       color: var(--ink-2);
       text-decoration: none;
@@ -272,8 +274,7 @@ button:focus-visible,
       z-index: 19;
       li {
         border-bottom: 1px solid var(--line);
-        > a,
-        .theme-toggle {
+        > a {
           display: block;
           padding: 14px 0;
           width: 100%;
@@ -309,6 +310,15 @@ button:focus-visible,
     color: var(--ink-2);
     @media (max-width: $screen-sm-max) {
       display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+  }
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    @media (max-width: $screen-sm-max) {
       margin-left: auto;
     }
   }
