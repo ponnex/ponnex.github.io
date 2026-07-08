@@ -1,14 +1,12 @@
 const STORAGE_KEY = 'ponnex-theme'
 
-// What the user picks. 'system' follows the OS and live-updates when it flips;
-// 'light' / 'dark' are explicit choices that pin the theme until changed.
+// What the user picks. 'system' is the unstored first-visit default — it
+// follows the OS and live-updates when it flips. The first click of the
+// toggle replaces it with an explicit 'light' / 'dark' that pins the theme.
 export type ThemeMode = 'system' | 'light' | 'dark'
 // What actually gets painted. 'default' is the dark theme (legacy class name —
 // the CSS classes are `theme--default` / `theme--light` and stay as-is).
 export type SiteTheme = 'default' | 'light'
-
-// Toggle order: system -> light -> dark -> system.
-const MODE_ORDER: ThemeMode[] = ['system', 'light', 'dark']
 
 function readMode(): ThemeMode {
   try {
@@ -73,10 +71,11 @@ export function useTheme() {
     mode.value = next // the watch reconciles `theme` + the <html> class
   }
 
-  function cycleMode() {
-    const i = MODE_ORDER.indexOf(mode.value)
-    setMode(MODE_ORDER[(i + 1) % MODE_ORDER.length] ?? 'system')
+  // Flip against the *resolved* theme, so the first click out of the unstored
+  // 'system' default pins the opposite of whatever is currently showing.
+  function toggleTheme() {
+    setMode(theme.value === 'light' ? 'dark' : 'light')
   }
 
-  return { mode, theme, setMode, cycleMode }
+  return { mode, theme, setMode, toggleTheme }
 }

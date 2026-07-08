@@ -37,11 +37,11 @@
         <button
           type="button"
           class="theme-toggle"
-          :aria-label="`theme: ${mode} — click to change`"
-          @click="cycleMode()"
+          :aria-label="`theme: ${themeLabel} — click to switch to ${themeLabel === 'dark' ? 'light' : 'dark'}`"
+          @click="toggleTheme()"
         >
           <span class="theme-toggle__bracket">[</span>
-          <span class="theme-toggle__label">{{ mode }}</span>
+          <span class="theme-toggle__label">{{ themeLabel }}</span>
           <span class="theme-toggle__bracket">]</span>
         </button>
         <button
@@ -62,7 +62,11 @@
 
 <script setup lang="ts">
 const route = useRoute()
-const { mode, cycleMode } = useTheme()
+const { theme, toggleTheme } = useTheme()
+
+// label shows the *resolved* theme — first-time visitors in system mode see
+// whatever the OS picked, and the first toggle pins the opposite
+const themeLabel = computed(() => (theme.value === 'light' ? 'light' : 'dark'))
 
 const menuOpen = ref(false)
 const isHome = computed(() => route.path === '/')
