@@ -65,7 +65,9 @@
             <span class="theme-toggle__bracket">]</span>
           </button>
         </div>
-        <form class="cform__body" novalidate @submit.prevent="onSubmit">
+        <!-- Native validation: name/email/message are `required`, so the
+             browser blocks empty submits (and bad emails) before onSubmit. -->
+        <form class="cform__body" @submit.prevent="onSubmit">
           <!-- Honeypot: real users never see or fill this; bots do. -->
           <input
             v-model="honeypot"
