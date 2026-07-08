@@ -75,7 +75,6 @@ body {
     color 0.35s ease;
 }
 
-
 // skip link
 .skip-link {
   position: absolute;
@@ -145,14 +144,8 @@ button:focus-visible,
 }
 
 // shared helpers
-.t-mono {
-  font-family: $mono;
-}
 .c-accent {
   color: var(--accent-text);
-}
-.c-green {
-  color: var(--green);
 }
 .c-dim {
   color: var(--ink-2);
@@ -1428,11 +1421,6 @@ button:focus-visible,
     color: var(--accent-text);
     margin: 0 0 12px;
     font-weight: 500;
-  }
-  &__stack {
-    color: var(--green) !important;
-    font-family: $mono !important;
-    font-size: 13px !important;
   }
   &__actions {
     display: flex;
