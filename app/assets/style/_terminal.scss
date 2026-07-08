@@ -586,7 +586,6 @@ button:focus-visible,
     color: #e8e8ea;
   }
   .code__bar i,
-  .cform__bar i,
   .ty__bar i {
     filter: grayscale(1);
   }
@@ -1024,6 +1023,7 @@ button:focus-visible,
     text-underline-offset: 3px;
   }
   &__copy {
+    font-size: 14px;
     color: var(--accent-ink);
     .theme-toggle__bracket,
     .theme-toggle__label {
@@ -1057,6 +1057,19 @@ button:focus-visible,
 }
 
 // ---- contact form (terminal window) ------------------------------
+// message.txt modal shell — the native <dialog> centers itself; we just
+// size it and paint the backdrop
+.cform-modal {
+  width: min(640px, calc(100vw - 32px));
+  border: 0;
+  padding: 0;
+  background: transparent;
+  &::backdrop {
+    background: rgba(10, 10, 14, 0.55);
+    backdrop-filter: blur(4px);
+  }
+}
+
 .cform {
   // Site has no global border-box reset (elements default to content-box), so
   // inputs with width:100% + padding overflowed their 1fr grid columns and the
@@ -1066,11 +1079,25 @@ button:focus-visible,
     box-sizing: border-box;
   }
   max-width: 640px;
-  margin: 0 auto 20px;
+  margin: 0 auto;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel);
   overflow: hidden;
+  &__close {
+    margin-left: auto;
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 4px 0 4px 6px;
+    cursor: pointer;
+    font-family: $mono;
+    font-size: 12px;
+    color: var(--ink-2);
+    &:hover .theme-toggle__label {
+      color: var(--accent-text);
+    }
+  }
   &__bar {
     display: flex;
     align-items: center;

@@ -22,9 +22,13 @@
         </button>
       </div>
       <div class="cta__actions">
-        <a class="btn btn--primary cta__btn" :href="`mailto:${email}`"
-          >email me →</a
+        <button
+          type="button"
+          class="btn btn--primary cta__btn"
+          @click="openModal"
         >
+          email me →
+        </button>
         <NuxtLink class="btn btn--ghost cta__btn-secondary" to="/resume"
           >view resume</NuxtLink
         >
@@ -32,80 +36,100 @@
     </div>
 
     <!--
-      Prefer-a-form path. Submits directly to Web3Forms, which emails the
-      message to the inbox tied to the access key below. On success we route to
-      /thankyou. No backend / Netlify Forms involved.
+      Prefer-a-form path, opened as a modal from the "email me" button.
+      Submits directly to Web3Forms, which emails the message to the inbox
+      tied to the access key below. On success we route to /thankyou.
+      No backend / Netlify Forms involved.
     -->
-    <div class="cform">
-      <div class="cform__bar" aria-hidden="true">
-        <i style="background: #ff5f56"></i><i style="background: #ffbd2e"></i
-        ><i style="background: #27c93f"></i>
-        <span class="fn">message.txt</span>
-      </div>
-      <form class="cform__body" novalidate @submit.prevent="onSubmit">
-        <!-- Honeypot: real users never see or fill this; bots do. -->
-        <input
-          v-model="honeypot"
-          type="checkbox"
-          name="botcheck"
-          class="cform__hp"
-          tabindex="-1"
-          autocomplete="off"
-          aria-hidden="true"
-        />
-
-        <div class="cform__row">
-          <label class="cform__field">
-            <span class="cform__label"
-              ><span class="c-accent">#</span> name</span
-            >
-            <input
-              id="cf-name"
-              v-model.trim="formData.name"
-              type="text"
-              required
-              autocomplete="name"
-              :disabled="sending"
-            />
-          </label>
-          <label class="cform__field">
-            <span class="cform__label"
-              ><span class="c-accent">#</span> email</span
-            >
-            <input
-              id="cf-email"
-              v-model.trim="formData.email"
-              type="email"
-              required
-              autocomplete="email"
-              :disabled="sending"
-            />
-          </label>
-        </div>
-        <label class="cform__field">
-          <span class="cform__label"
-            ><span class="c-accent">#</span> message</span
+    <dialog
+      ref="dialogEl"
+      class="cform-modal"
+      aria-label="Send me a message"
+      @click.self="closeModal"
+      @close="onDialogClose"
+    >
+      <div class="cform">
+        <div class="cform__bar">
+          <i style="background: #ff5f56" aria-hidden="true"></i
+          ><i style="background: #ffbd2e" aria-hidden="true"></i
+          ><i style="background: #27c93f" aria-hidden="true"></i>
+          <span class="fn" aria-hidden="true">message.txt</span>
+          <button
+            type="button"
+            class="theme-toggle cform__close"
+            aria-label="Close message form"
+            @click="closeModal"
           >
-          <textarea
-            id="cf-message"
-            v-model.trim="formData.message"
-            rows="4"
-            required
+            <span class="theme-toggle__bracket">[</span>
+            <span class="theme-toggle__label">close</span>
+            <span class="theme-toggle__bracket">]</span>
+          </button>
+        </div>
+        <form class="cform__body" novalidate @submit.prevent="onSubmit">
+          <!-- Honeypot: real users never see or fill this; bots do. -->
+          <input
+            v-model="honeypot"
+            type="checkbox"
+            name="botcheck"
+            class="cform__hp"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+
+          <div class="cform__row">
+            <label class="cform__field">
+              <span class="cform__label"
+                ><span class="c-accent">#</span> name</span
+              >
+              <input
+                id="cf-name"
+                v-model.trim="formData.name"
+                type="text"
+                required
+                autocomplete="name"
+                :disabled="sending"
+              />
+            </label>
+            <label class="cform__field">
+              <span class="cform__label"
+                ><span class="c-accent">#</span> email</span
+              >
+              <input
+                id="cf-email"
+                v-model.trim="formData.email"
+                type="email"
+                required
+                autocomplete="email"
+                :disabled="sending"
+              />
+            </label>
+          </div>
+          <label class="cform__field">
+            <span class="cform__label"
+              ><span class="c-accent">#</span> message</span
+            >
+            <textarea
+              id="cf-message"
+              v-model.trim="formData.message"
+              rows="6"
+              required
+              :disabled="sending"
+            ></textarea>
+          </label>
+
+          <p v-if="error" class="cform__error" role="alert">{{ error }}</p>
+
+          <button
+            type="submit"
+            class="btn btn--primary cform__submit"
             :disabled="sending"
-          ></textarea>
-        </label>
-
-        <p v-if="error" class="cform__error" role="alert">{{ error }}</p>
-
-        <button
-          type="submit"
-          class="btn btn--primary cform__submit"
-          :disabled="sending"
-        >
-          {{ sending ? 'sending…' : 'send message →' }}
-        </button>
-      </form>
-    </div>
+          >
+            {{ sending ? 'sending…' : 'send message →' }}
+          </button>
+        </form>
+      </div>
+    </dialog>
   </section>
 </template>
 
@@ -118,6 +142,27 @@ const WEB3FORMS_ACCESS_KEY = 'f24d2260-a575-405a-a9a1-9b2e55a55ec3';
 
 const email = 'hello@ponnex.dev';
 const { copied, copy } = useCopyText();
+
+// message.txt lives in a native <dialog>: showModal() gives us the focus
+// trap, Esc-to-close and ::backdrop for free. Backdrop clicks hit the
+// dialog element itself (click.self) — content clicks hit its children.
+const dialogEl = ref<HTMLDialogElement | null>(null);
+
+function openModal() {
+  dialogEl.value?.showModal();
+  document.body.classList.add('no-scroll');
+}
+
+function closeModal() {
+  dialogEl.value?.close();
+}
+
+// fires for every close path (close button, backdrop, Esc)
+function onDialogClose() {
+  document.body.classList.remove('no-scroll');
+}
+
+onBeforeUnmount(() => document.body.classList.remove('no-scroll'));
 
 const formData = reactive({ name: '', email: '', message: '' });
 const honeypot = ref(false);
