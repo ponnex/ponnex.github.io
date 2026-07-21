@@ -3,7 +3,7 @@
 		<header class="page-head shell">
 			<div class="page-head__tag"><span class="h">$</span> ls ~/projects</div>
 			<h1 class="page-head__title">Selected Work</h1>
-			<p class="page-head__sub">Client work I'm part of — shipped across airlines, banks, e-commerce, crypto and more — plus the projects I've built on my own.</p>
+			<p class="page-head__sub">Client work I'm part of — shipped across airlines, banks, e-commerce, marketplaces and more — plus the projects I've built on my own.</p>
 		</header>
 
 		<div class="shell filter-bar">
@@ -39,12 +39,12 @@ const filterTags = computed(() => ['all', ...projectFilters.map((b) => b.label)]
 
 // Canonical + og:url come from app.vue (per-route, trailing-slash form).
 useSeoMeta({
-	title: 'Selected Work — Emmanuel Francis Ramos, Frontend Engineer',
+	title: 'Selected Work — Emmanuel Francis Ramos, Senior Frontend Engineer',
 	description:
-		'Frontend engineering work by Emmanuel Francis Ramos across airlines, banking, e-commerce and crypto — Singapore Airlines, Toniq, Odin.fun, Bioniq and more.',
-	ogTitle: 'Selected Work — Emmanuel Francis Ramos, Frontend Engineer',
+		'Frontend engineering work by Emmanuel Francis Ramos across airlines, banking, e-commerce and product platforms — Singapore Airlines, Odin.fun, Toniq, Bioniq and more.',
+	ogTitle: 'Selected Work — Emmanuel Francis Ramos, Senior Frontend Engineer',
 	ogDescription:
-		'Frontend engineering work across airlines, banking, e-commerce and crypto — Singapore Airlines, Toniq, Odin.fun and more.',
+		'Frontend engineering work across airlines, banking, e-commerce and product platforms — Singapore Airlines, Odin.fun, Toniq and more.',
 })
 
 // Structured data for the work index: a CollectionPage about the Person, a
@@ -61,9 +61,9 @@ const projectsLd = {
 			'@type': 'CollectionPage',
 			'@id': `${SITE}/projects/#collectionpage`,
 			url: `${SITE}/projects/`,
-			name: 'Selected Work — Emmanuel Francis Ramos, Frontend Engineer',
+			name: 'Selected Work — Emmanuel Francis Ramos, Senior Frontend Engineer',
 			description:
-				'Frontend engineering work by Emmanuel Francis Ramos across airlines, banking, e-commerce and crypto — Singapore Airlines, Toniq, Odin.fun, Bioniq and more.',
+				'Frontend engineering work by Emmanuel Francis Ramos across airlines, banking, e-commerce and product platforms — Singapore Airlines, Odin.fun, Toniq, Bioniq and more.',
 			isPartOf: { '@id': `${SITE}/#website` },
 			about: { '@id': `${SITE}/#person` },
 			inLanguage: 'en',

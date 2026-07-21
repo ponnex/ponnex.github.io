@@ -18,14 +18,26 @@ export const skillContextLabels: Record<SkillContext, string> = {
   exploring: 'exploring',
 }
 
-// Grounded in the resume stack (Vue/Nuxt/React/Next, Vuex/Pinia/Redux,
-// SCSS/Tailwind/MUI, Jest) plus the crypto / Internet Computer work.
+// Grounded in the 2026 resume stack (Vue/Nuxt/React/Next, AI-native workflows,
+// design systems, real-time product interfaces).
 export const skillGroups: SkillGroup[] = [
   {
-    group: 'frameworks',
+    group: 'ai engineering',
     items: [
-      { name: 'Vue · Nuxt', context: 'daily_driver' },
-      { name: 'React · Next.js', context: 'production_ready' },
+      { name: 'Claude Code', context: 'daily_driver' },
+      { name: 'Cursor', context: 'daily_driver' },
+      { name: 'MCP integrations', context: 'production_ready' },
+      { name: 'Spec-driven development', context: 'production_ready' },
+      { name: 'GitHub Copilot', context: 'production_ready' },
+    ],
+  },
+  {
+    group: 'architecture',
+    items: [
+      { name: 'Design systems', context: 'production_ready' },
+      { name: 'Monorepo · Turborepo', context: 'production_ready' },
+      { name: 'Offline-first', context: 'production_ready' },
+      { name: 'i18n · Accessibility', context: 'production_ready' },
     ],
   },
   {
@@ -36,34 +48,47 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    group: 'styling · ui',
-    items: [
-      { name: 'SCSS · CSS', context: 'daily_driver' },
-      { name: 'Tailwind', context: 'daily_driver' },
-      { name: 'Material UI', context: 'production_ready' },
-    ],
-  },
-  {
     group: 'state · data',
     items: [
+      { name: 'TanStack Query', context: 'production_ready' },
       { name: 'Pinia · Vuex', context: 'daily_driver' },
-      { name: 'Redux', context: 'production_ready' },
+      { name: 'Redux · Zustand', context: 'production_ready' },
       { name: 'REST APIs', context: 'production_ready' },
     ],
   },
   {
-    group: 'web3',
+    group: 'styling · ui',
     items: [
-      { name: 'Internet Computer', context: 'production_ready' },
-      { name: 'Bitcoin · canisters', context: 'production_ready' },
+      { name: 'Tailwind', context: 'daily_driver' },
+      { name: 'SCSS · CSS', context: 'daily_driver' },
+      { name: 'shadcn/ui', context: 'production_ready' },
+      { name: 'Material UI', context: 'production_ready' },
+    ],
+  },
+  {
+    group: 'cloud · ci',
+    items: [
+      { name: 'GitHub Actions', context: 'production_ready' },
+      { name: 'Vercel · Netlify', context: 'production_ready' },
+      { name: 'Docker', context: 'production_ready' },
+      { name: 'pnpm · npm', context: 'production_ready' },
     ],
   },
   {
     group: 'tooling · test',
     items: [
+      { name: 'Vitest · Playwright', context: 'production_ready' },
+      { name: 'Storybook', context: 'production_ready' },
       { name: 'Vite · Webpack', context: 'production_ready' },
       { name: 'Jest', context: 'production_ready' },
       { name: 'Git', context: 'daily_driver' },
+    ],
+  },
+  {
+    group: 'frameworks',
+    items: [
+      { name: 'React · Next.js', context: 'daily_driver' },
+      { name: 'Vue · Nuxt', context: 'daily_driver' },
     ],
   },
 ]
@@ -77,7 +102,7 @@ export interface Service {
 export const services: Service[] = [
   {
     title: 'Web app development',
-    description: 'End-to-end front-of-app builds — from booking flows to dashboards to dapps.',
+    description: 'End-to-end front-of-app builds — from booking flows to dashboards to real-time product interfaces.',
   },
   {
     title: 'Frontend architecture',
@@ -86,6 +111,10 @@ export const services: Service[] = [
   {
     title: 'Design systems & UI',
     description: 'Reusable, accessible component libraries with the polish most builds skip.',
+  },
+  {
+    title: 'AI-native engineering',
+    description: 'Spec-driven workflows, repository context (CLAUDE.md, AGENTS.md), and MCP integrations that help teams ship faster with AI assistance.',
   },
   {
     title: 'Performance & motion',

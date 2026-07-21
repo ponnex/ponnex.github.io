@@ -38,23 +38,23 @@
 const faqs = [
 	{
 		q: 'What does Emmanuel Francis Ramos do?',
-		a: 'Emmanuel Francis Ramos is a frontend engineer with 9+ years building production web applications. He works day-to-day in Vue, Nuxt, React, Next.js and TypeScript, owning features end-to-end — from design system to shipped, real-time interfaces — across airlines, banking, e-commerce and crypto.',
+		a: 'Emmanuel Francis Ramos is a senior frontend engineer with 9+ years building production web applications. He works day-to-day in React, TypeScript, Vue and Nuxt — owning features end-to-end from design systems to shipped, real-time interfaces — across enterprise, banking, e-commerce and product platforms.',
 	},
 	{
 		q: 'What is his tech stack?',
-		a: 'His daily stack is Vue, Nuxt, TypeScript, JavaScript, SCSS and Tailwind, with Pinia or Vuex for state. He also ships React, Next.js and Redux in production, builds on the Internet Computer and Bitcoin, and works with Vite, Webpack, Jest and Git.',
+		a: 'His daily stack is React, Next.js, TypeScript, Vue, Nuxt, Tailwind and SCSS, with TanStack Query, Pinia and Redux for state. He uses Claude Code and MCP for AI-native workflows, and works with Vitest, Playwright, Storybook, GitHub Actions and Vercel.',
 	},
 	{
 		q: 'Is he available for freelance or full-time work?',
 		a: 'Yes. Emmanuel is open to both select freelance projects and full-time roles, and he works remotely. The fastest way to start a conversation is email at hello@ponnex.dev — he typically replies within 24 hours.',
 	},
 	{
-		q: 'Does he have Web3 or blockchain experience?',
-		a: 'Yes. He has shipped production Web3 frontends on the Internet Computer and Bitcoin, including Odin.fun — a real-time trading platform trading against ICP canisters — and the Bioniq and Toniq NFT marketplaces, covering wallet flows, on-chain data and near-instant settlement UX.',
+		q: 'Does he use AI in his engineering workflow?',
+		a: 'Yes. At CoDev he established AI-native engineering workflows using Claude Code — repository context via CLAUDE.md and AGENTS.md, specification-driven development with SPEC.md and PLAN.md, custom Claude skills, and MCP integrations to accelerate implementation, refactoring, testing and code review.',
 	},
 	{
 		q: 'Which companies and projects has he worked on?',
-		a: 'His client work includes Singapore Airlines, Caltex, the Singapore Biennale, two banking platforms, and the crypto products Odin.fun, Bioniq and Toniq. Alongside that he has built personal projects spanning PWAs, mobile apps and IoT companions since 2015.',
+		a: 'His client work includes Singapore Airlines, Caltex, the Singapore Biennale, two banking platforms, and product work on Odin.fun, Bioniq and Toniq. Alongside that he has built personal projects spanning PWAs, mobile apps and IoT companions since 2015.',
 	},
 	{
 		q: 'How can I contact him?',

@@ -98,7 +98,7 @@ export function projectMetaDescription(project: Project): string {
 // the raw tags into a handful of meaningful buckets. Every project falls into
 // at least one bucket — verify with `npm run dev` if you add/retag projects.
 export const projectFilters: { label: string; tags: string[] }[] = [
-  { label: 'web3', tags: ['crypto', 'bitcoin', 'trading', 'nft', 'web3'] },
+  { label: 'marketplaces', tags: ['crypto', 'bitcoin', 'trading', 'nft', 'web3'] },
   { label: 'banking', tags: ['banking', 'kyc', 'fintech'] },
   { label: 'e-commerce', tags: ['e-commerce', 'marketplace', 'booking'] },
   { label: 'automotive', tags: ['automotive'] },

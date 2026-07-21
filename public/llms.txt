@@ -1,21 +1,21 @@
-# Emmanuel Francis Ramos — Frontend Engineer
+# Emmanuel Francis Ramos — Senior Frontend Engineer
 
-> Frontend engineer with 9+ years building production web applications in Vue, Nuxt, React, Next.js and TypeScript. Owns features end-to-end — from design system to shipped, real-time, on-chain interfaces — across airlines, banking, e-commerce and crypto. Open to remote freelance and full-time roles. Contact: hello@ponnex.dev (replies within 24h).
+> Senior frontend engineer with 9+ years building production web applications in React, TypeScript, Vue, Nuxt and AI-native engineering workflows. Owns features end-to-end — from design systems to shipped, real-time interfaces — across enterprise, banking, e-commerce and product platforms. Open to remote freelance and full-time roles. Contact: hello@ponnex.dev (replies within 24h).
 
 ## About
 - Name: Emmanuel Francis Ramos (alias "Ponnex")
-- Role: Frontend Engineer, remote
+- Role: Senior Frontend Engineer, remote
 - Experience: 9+ years shipping production web apps across 9 industries
 - Availability: open to select freelance and full-time remote work
-- Daily stack: Vue, Nuxt, TypeScript, JavaScript, SCSS, Tailwind, Pinia/Vuex
-- Also production: React, Next.js, Redux, Internet Computer, Bitcoin, Vite, Webpack, Jest, Git
-- Web3: shipped frontends on the Internet Computer and Bitcoin (canisters, wallet flows, near-instant settlement)
+- Daily stack: React, Next.js, TypeScript, Vue, Nuxt, Tailwind, SCSS
+- AI-native: Claude Code, Cursor, MCP integrations, spec-driven development (CLAUDE.md, AGENTS.md, SPEC.md)
+- Also production: TanStack Query, Redux, Zustand, Vitest, Playwright, Storybook, Turborepo, GitHub Actions, Vercel
 
 ## Key projects
 - [Singapore Airlines](https://ponnex.dev/projects/sia/): revamped the official site, migrated a legacy JS codebase to Vue + TypeScript without disrupting live booking traffic (2020)
-- [Odin.fun](https://ponnex.dev/projects/odin/): real-time trading platform on Internet Computer + Bitcoin; frontend trades directly against ICP canisters, Kafka CDC pipeline for sub-second on-chain data (2025)
-- [Bioniq](https://ponnex.dev/projects/bioniq/): fast BTC inscription marketplace, secure token bridging, near-instant finality (2023)
-- [Toniq](https://ponnex.dev/projects/toniq/): decentralized non-custodial NFT marketplace on the Internet Computer (2022)
+- [Odin.fun](https://ponnex.dev/projects/odin/): real-time trading platform — React/Tailwind frontend with sub-second market data (2025)
+- [Bioniq](https://ponnex.dev/projects/bioniq/): fast inscription marketplace with secure token bridging and near-instant settlement UX (2023)
+- [Toniq](https://ponnex.dev/projects/toniq/): non-custodial digital asset marketplace (2022)
 - [Singapore Biennale 2019](https://ponnex.dev/projects/biennale/): redesigned the website and content for the contemporary-art event (2019)
 
 ## Links

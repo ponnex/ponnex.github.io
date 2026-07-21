@@ -26,7 +26,7 @@ const SITE = 'https://ponnex.dev'
 // freshness signal for search + AI. Bump when the portfolio's substance changes
 // (new project, reworked copy), not on every deploy. ISO date only (no time);
 // kept as a literal so it's deterministic at prerender.
-const SITE_UPDATED = '2026-06-29'
+const SITE_UPDATED = '2026-07-21'
 
 // JSON-LD: ProfilePage › Person + WebSite. This is what lets Google (and AI
 // search) read "Emmanuel Francis Ramos = Frontend Engineer, these skills, these
@@ -45,28 +45,37 @@ const personLd = {
       url: `${SITE}/`,
       image: `${SITE}/og.png`,
       email: 'mailto:hello@ponnex.dev',
-      jobTitle: 'Frontend Engineer',
+      jobTitle: 'Senior Frontend Engineer',
       description:
-        'Frontend engineer with 9+ years building production web applications in Vue, Nuxt, React, Next.js and TypeScript. Open to remote roles.',
+        'Senior frontend engineer with 9+ years building production web applications in React, TypeScript, Vue, Nuxt and AI-native engineering workflows. Open to remote roles.',
       knowsAbout: [
         'Frontend Engineering',
         'Web Development',
-        'Vue.js',
-        'Nuxt',
+        'AI-Native Engineering',
+        'Claude Code',
+        'MCP Integrations',
+        'Specification-Driven Development',
         'React',
         'Next.js',
+        'Vue.js',
+        'Nuxt',
         'TypeScript',
         'JavaScript',
+        'Design Systems',
         'SCSS',
         'CSS',
         'Tailwind CSS',
-        'Material UI',
+        'shadcn/ui',
+        'TanStack Query',
         'Pinia',
         'Vuex',
         'Redux',
         'REST APIs',
-        'Internet Computer',
-        'Bitcoin',
+        'Vitest',
+        'Playwright',
+        'Storybook',
+        'Turborepo',
+        'GitHub Actions',
         'Vite',
         'Webpack',
         'Jest',
@@ -74,10 +83,10 @@ const personLd = {
       ],
       hasOccupation: {
         '@type': 'Occupation',
-        name: 'Frontend Engineer',
+        name: 'Senior Frontend Engineer',
         occupationLocation: { '@type': 'Place', name: 'Remote' },
         skills:
-          'Vue, Nuxt, React, Next.js, TypeScript, JavaScript, SCSS, Tailwind, state management, REST APIs, Web3',
+          'React, Next.js, TypeScript, Vue, Nuxt, design systems, AI-native engineering, Claude Code, MCP',
       },
       sameAs: [
         'https://www.linkedin.com/in/ponnex/',
@@ -89,9 +98,9 @@ const personLd = {
       '@type': 'WebSite',
       '@id': `${SITE}/#website`,
       url: `${SITE}/`,
-      name: 'Emmanuel Francis Ramos — Frontend Engineer',
+      name: 'Emmanuel Francis Ramos — Senior Frontend Engineer',
       description:
-        'Portfolio of Emmanuel Francis Ramos, a frontend engineer available for remote work.',
+        'Portfolio of Emmanuel Francis Ramos, a senior frontend engineer available for remote work.',
       author: { '@id': `${SITE}/#person` },
       inLanguage: 'en',
     },
@@ -99,7 +108,7 @@ const personLd = {
       '@type': 'ProfilePage',
       '@id': `${SITE}/#profilepage`,
       url: `${SITE}/`,
-      name: 'Emmanuel Francis Ramos — Frontend Engineer',
+      name: 'Emmanuel Francis Ramos — Senior Frontend Engineer',
       isPartOf: { '@id': `${SITE}/#website` },
       about: { '@id': `${SITE}/#person` },
       mainEntity: { '@id': `${SITE}/#person` },

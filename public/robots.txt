@@ -1,4 +1,4 @@
-# https://ponnex.dev — Emmanuel Francis Ramos, Frontend Engineer.
+# https://ponnex.dev — Emmanuel Francis Ramos, Senior Frontend Engineer.
 # Recruiters & search engines welcome — everything below is crawlable.
 User-agent: *
 Allow: /

@@ -2,7 +2,7 @@
 	<section class="hero shell">
 		<div class="hero__grid">
 			<div class="hero__head">
-				<div class="hero__tag"><span class="c-accent">$</span> whoami <span class="c-dim">— frontend engineer</span></div>
+				<div class="hero__tag"><span class="c-accent">$</span> whoami <span class="c-dim">— senior frontend engineer</span></div>
 				<h1 class="hero__name">Emmanuel Francis<br><span class="y">Ramos</span></h1>
 			</div>
 			<div class="hero__portrait">
@@ -15,7 +15,7 @@
 				/>
 			</div>
 			<div class="hero__body">
-				<p class="hero__blurb">I build <b>fast, polished web applications</b> for ambitious teams — airlines, banks, e-commerce, crypto and more. Nine industries shipped, and counting.</p>
+				<p class="hero__blurb">I build <b>fast, polished web applications</b> for ambitious teams — airlines, banks, e-commerce, marketplaces and more. Frontend architecture, design systems, and AI-native engineering workflows.</p>
 				<div class="hero__actions">
 					<a class="btn btn--primary" href="#contact">start a project →</a>
 					<NuxtLink class="btn btn--ghost" to="/resume">view resume</NuxtLink>

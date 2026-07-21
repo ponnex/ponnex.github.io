@@ -45,21 +45,21 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
-      title: 'Emmanuel Francis Ramos — Frontend Engineer',
+      title: 'Emmanuel Francis Ramos — Senior Frontend Engineer',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
           content:
-            'Frontend engineer — Vue, Nuxt, React, Next.js, TypeScript. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
+            'Senior frontend engineer — React, TypeScript, Vue, Nuxt, AI-native workflows. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
         },
         { property: 'og:site_name', content: 'ponnex.dev' },
-        { property: 'og:title', content: 'Emmanuel Francis Ramos — Frontend Engineer' },
+        { property: 'og:title', content: 'Emmanuel Francis Ramos — Senior Frontend Engineer' },
         {
           property: 'og:description',
           content:
-            'Frontend engineer — Vue, Nuxt, React, Next.js, TypeScript. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
+            'Senior frontend engineer — React, TypeScript, Vue, Nuxt, AI-native workflows. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
         },
         { property: 'og:type', content: 'website' },
         // og:url is set per-route in app.vue (canonical, trailing-slash form),
@@ -69,15 +69,15 @@ export default defineNuxtConfig({
         { property: 'og:image:height', content: '630' },
         {
           property: 'og:image:alt',
-          content: 'Emmanuel Francis Ramos — Frontend Engineer',
+          content: 'Emmanuel Francis Ramos — Senior Frontend Engineer',
         },
         // Large image card so the preview is a banner, not a tiny thumbnail.
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Emmanuel Francis Ramos — Frontend Engineer' },
+        { name: 'twitter:title', content: 'Emmanuel Francis Ramos — Senior Frontend Engineer' },
         {
           name: 'twitter:description',
           content:
-            'Frontend engineer — Vue, Nuxt, React, Next.js, TypeScript. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
+            'Senior frontend engineer — React, TypeScript, Vue, Nuxt, AI-native workflows. 9+ years shipping production web apps. Open to remote roles. Past work: Singapore Airlines, Toniq, Odin.fun.',
         },
         { name: 'twitter:image', content: 'https://ponnex.dev/og.png' },
       ],
